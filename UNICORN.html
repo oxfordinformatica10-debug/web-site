@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agro Unicorn | Maquinaria para el campo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #f0f2f5;
+      color: #111;
+    }
+
+    header {
+      background-color: #ffffff;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .logo span {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #0e008b;
+    }
+
+    nav a {
+      margin-left: 10px;
+      color: #000;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: url('https://bacanika.com/articulo/images/4.0_BACANIKA/CULTURA/JINETES/Cholo.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-overlay {
+      background: rgba(255,255,255,0.85);
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .hero-overlay h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-overlay p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: #444;
+    }
+
+    .hero-overlay button {
+      background-color: white;
+      color: #000000;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-overlay button:hover {
+      background-color: whitesmoke;
+      transform: scale(1.05);
+    }
+
+   .carousel-gama {
+  padding: 60px 40px;
+  background-color: #ffffff;
+}
+
+.carousel-gama h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.product-card {
+  min-width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #eee;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.product-card h3 {
+  margin: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+.carousel-btn:hover {
+  background-color: #f2f2f2;
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: crimson;
+  color: white;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-content h2 {
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  padding: 12px 24px;
+  background-color: #0e008b;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #0070cc;
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.4rem;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .search-bar input {
+      width: 60%;
+      padding: 15px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .search-wrapper {
+  position: relative;
+  width: 60%;
+  margin: 40px auto;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.sugerencias-lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 250px;
+  overflow-y: auto;
+  display: none;
+  margin-top: 4px;
+  list-style: none;
+  z-index: 1000;
+}
+
+.sugerencias-lista li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.sugerencias-lista li:hover,
+.sugerencias-lista li.active {
+  background-color: #f0f8ff;
+  font-weight: 500;
+}
+
+.sugerencia-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.sugerencia-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sugerencia-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.sugerencia-item .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sugerencia-item .info strong {
+  font-size: 1rem;
+  color: #222;
+}
+
+.sugerencia-item .info span {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+    .testimonios, .beneficios, .newsletter, .ubicacion {
+      padding: 40px;
+      background-color: #ffffff;
+    }
+
+    .testimonios .cliente {
+      margin-bottom: 20px;
+      border-left: 4px solid #424949;
+      padding-left: 20px;
+    }
+
+    .beneficios {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+    }
+
+    .beneficio {
+      max-width: 150px;
+    }
+
+    .newsletter input {
+      padding: 12px;
+      width: 60%;
+      margin-right: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .newsletter button {
+      padding: 12px 20px;
+      border: none;
+      background-color: #0e008b;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #000;
+      color: #aaa;
+      padding: 40px;
+      text-align: center;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="window.location.href='UNICORN.html'">
+      <img src="https://agro.unicorn.com.co/web/image/16724/20200424%20auls_planobordeazul_v1.png" alt="Logo Agro Unicorn"/>
+      <span>UNICORN</span>
+    </div>
+    <nav>
+      <a href="productos.html">Productos</a>
+      <a href="piezas.html">Piezas y Accesorios</a>
+      <a href="carrito.html">Carrito 🛒</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-overlay">
+      <h1>Maquinaria de alta calidad para el campo</h1>
+      <p>Potencia, eficiencia y durabilidad para todos tus trabajos agrícolas.</p>
+      <button onclick="window.location.href='productos.html'">Explorar productos</button>
+    </div>
+  </section>
+
+  <!-- Nueva sección carrusel "Descubre nuestra gama" -->
+  <section class="carousel-gama">
+  <h2>Descubre nuestra gama</h2>
+  <div class="carousel-wrapper" id="carouselArea">
+    <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+    <div id="productCarousel" class="carousel-inner">
+
+      <div class="product-card" onclick="abrirModal('Ahoyador Beaver AG52 (2T-51.7cc-1.5KW-Barreno 20cm)', 'https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f', '$ 1,020,000.00')">
+        <span class="product-badge">Nuevo</span>
+        <img src="https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f" alt="Campo y Jardín">
+        <h3>Ahoyador Beaver AG52</h3>
+      </div>
+
+      <div class="product-card" onclick="abrirModal('Motobomba autocebante aluminio gasolina Forte DJ50', 'https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1', '$816,000.00')">
+        <span class="product-badge">Popular</span>
+        <img src="https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1" alt="Manejo de Agua">
+        <h3>Motobomba autocebante aluminio</h3>
+      </div>
+
+      <div class="product-card" onclick="abrirModal('Fumigadora manual Royal Condor Aliada 20 L', 'https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d', '$ 336,600.00')">
+        <img src="https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d" alt="Fumigadora manual">
+        <h3>Fumigadora manual</h3>
+      </div>
+
+      <div class="product-card" onclick="abrirModal('Generador gasolina Husqvarna G5500P (Pmax 5.2KVA-1Φ-110/220Vac-AM/E)', 'https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2', '$ 3,825,000.00')">
+        <span class="product-badge">Nuevo</span>
+        <img src="https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2" alt="Generador gasolina Husqvarna G5500P">
+        <h3>Generador gasolina Husqvarna G5500P</h3>
+      </div>
+
+      <div class="product-card" onclick="abrirModal('Electrobomba alta presión Barnes 2015HCE-5-3 (2x2-5HP-3Φ-220/440V-Hmax 42m-Qmax 150gpm)', 'https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c', '$ 3,345,600.00')">
+        <img src="https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c" alt="Electrobomba alta presión Barnes">
+        <h3>Electrobomba alta presión Barnes</h3>
+      </div>
+
+      <div class="product-card" onclick="abrirModal('Cerca eléctrica El Cebú EC80Km', 'https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb', '$ 512,200.00')">
+        <span class="product-badge">Top Ventas</span>
+        <img src="https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb" alt="Cerca eléctrica">
+        <h3>Cerca eléctrica</h3>
+      </div>
+
+    </div>
+    <button class="carousel-btn right" onclick="scrollCarousel(1)">&#10095;</button>
+  </div>
+</section>
+
+  
+  <div class="search-wrapper">
+    <input id="buscador" type="text" placeholder="¿Qué estás buscando hoy?" autocomplete="off" />
+    <ul id="sugerencias" class="sugerencias-lista"></ul>
+  </div>
+
+  <section class="testimonios">
+    <h2>Opiniones de nuestros clientes</h2>
+    <div class="cliente">
+      <p>"Excelente maquinaria, me ha durado años sin problemas. Recomiendo UNICORN 100%!"</p>
+      <strong>- Juan Pérez</strong>
+    </div>
+    <div class="cliente">
+      <p>"El servicio y la calidad son increíbles. La guadaña que compré es potente y fácil de usar."</p>
+      <strong>- María González</strong>
+    </div>
+  </section>
+
+  <section class="beneficios">
+    <div class="beneficio">
+      <h3>🛠</h3>
+      <p>Garantía incluida</p>
+    </div>
+    <div class="beneficio">
+      <h3>🚚</h3>
+      <p>Envíos rápidos</p>
+    </div>
+    <div class="beneficio">
+      <h3>💬</h3>
+      <p>Soporte técnico</p>
+    </div>
+    <div class="beneficio">
+      <h3>💳</h3>
+      <p>Pagos seguros</p>
+    </div>
+  </section>
+
+  <section class="porque-elegirnos" style="background-color: #f8f9fa; padding: 60px 40px;">
+  <h2 style="text-align: center; margin-bottom: 30px;">¿Por qué elegir UNICORN?</h2>
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px;">
+    <div style="flex: 1 1 250px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center;">
+      <h3>🔧 Especialistas en el agro</h3>
+      <p>Más de 25 años de experiencia en maquinaria para campo y jardín.</p>
+    </div>
+    <div style="flex: 1 1 250px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center;">
+      <h3>🛡 Garantía y soporte</h3>
+      <p>Respaldo técnico, repuestos y atención en todo el país.</p>
+    </div>
+    <div style="flex: 1 1 250px; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center;">
+      <h3>🌱 Compromiso con el campo</h3>
+      <p>Promovemos soluciones sostenibles y duraderas para agricultores.</p>
+    </div>
+  </div>
+</section>
+
+<section class="ubicacion" style="padding: 60px 20px; background-color: #ffffff;">
+  <h2 style="text-align: center; margin-bottom: 30px;">Encuentra nuestras sucursales</h2>
+  <div style="max-width: 1000px; margin: auto;">
+    <iframe src="https://www.google.com/maps/d/embed?mid=12gK3EpCM14jX0ypiJFF1DSGjurkOisg&ehbc=2E312F" width="100%" height="450" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+  <footer style="background-color: #111; color: #fff; padding: 40px 20px; font-size: 0.9rem;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto;">
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px; color: #fff;">UNICORN</h4>
+      <p>Maquinaria de calidad para el campo colombiano desde 1995.</p>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Productos</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="campo y jardin.html" style="color: #ccc; text-decoration: none;">Campo y Jardín</a></li>
+        <li><a href="manejo de agua.html" style="color: #ccc; text-decoration: none;">Manejo de Agua</a></li>
+        <li><a href="fumigacion.html" style="color: #ccc; text-decoration: none;">Fumigación</a></li>
+        <li><a href="manejo de energia.html" style="color: #ccc; text-decoration: none;">Manejo de Energía</a></li>
+        <li><a href="construccion.html" style="color: #ccc; text-decoration: none;">Construcción</a></li>
+        <li><a href="ferreteria.html" style="color: #ccc; text-decoration: none;">Ferretería</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Empresa</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sobre nosotros</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sucursales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Blog</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Soporte</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Contacto</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Garantía</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Manuales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Centro técnico</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Síguenos</h4>
+      <div style="margin: 10px; display: 20px flex; gap: 40px;">
+        <a href="https://facebook.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" style="width: 24px;"></a>
+        <a href="https://instagram.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" style="width: 24px;"></a>
+        <a href="https://www.youtube.com/@agro-unicorn" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733646.png" style="width: 24px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center; color: #aaa;">
+    © 2025 UNICORN. Todos los derechos reservados. | <a href="#" style="color: #aaa;">Política de privacidad</a>
+  </div>
+</footer>
+
+  <script>
+  const carousel = document.getElementById('productCarousel');
+  const carouselArea = document.getElementById('carouselArea');
+  let autoScroll;
+
+  function scrollCarousel(direction) {
+    carousel.scrollBy({
+      left: direction * 240,
+      behavior: 'smooth'
+    });
+  }
+
+  function startAutoScroll() {
+    autoScroll = setInterval(() => scrollCarousel(1), 4000);
+  }
+
+  function stopAutoScroll() {
+    clearInterval(autoScroll);
+  }
+
+  carouselArea.addEventListener('mouseenter', stopAutoScroll);
+  carouselArea.addEventListener('mouseleave', startAutoScroll);
+
+  startAutoScroll();
+
+  function abrirModal(titulo, imagen, descripcion) {
+  document.getElementById('modalTitulo').textContent = titulo;
+  document.getElementById('modalImagen').src = imagen;
+  document.getElementById('modalDescripcion').textContent = descripcion;
+  document.getElementById('modalProducto').style.display = 'flex';
+}
+
+function cerrarModal() {
+  document.getElementById('modalProducto').style.display = 'none';
+}
+
+const buscador = document.getElementById('buscador');
+const sugerencias = document.getElementById('sugerencias');
+let seleccionado = -1;
+
+const productos = [
+  {
+    nombre: 'Ahoyador Beaver AG52',
+    url: 'campo y jardin.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f',
+    categoria: 'Campo y Jardín'
+  },
+  {
+    nombre: 'Motobomba autocebante aluminio',
+    url: 'producto2.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1',
+    categoria: 'Manejo de Agua'
+  },
+  {
+    nombre: 'Fumigadora manual Royal Condor',
+    url: 'producto3.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d',
+    categoria: 'Fumigación'
+  },
+  {
+    nombre: 'Generador Husqvarna G5500P',
+    url: 'producto4.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2',
+    categoria: 'Manejo de Energía'
+  },
+  {
+    nombre: 'Electrobomba Barnes 2015HCE-5-3',
+    url: 'producto5.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c',
+    categoria: 'Manejo de Agua'
+  },
+  {
+    nombre: 'Cerca eléctrica El Cebú EC80Km',
+    url: 'producto6.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb',
+    categoria: 'Campo y Jardín'
+  }
+];
+
+buscador.addEventListener('input', () => {
+  const term = buscador.value.toLowerCase().trim();
+  sugerencias.innerHTML = '';
+  seleccionado = -1;
+
+  if (!term) {
+    sugerencias.style.display = 'none';
+    return;
+  }
+
+  const matches = productos.filter(p => p.nombre.toLowerCase().includes(term));
+  if (matches.length > 0) {
+    matches.forEach(p => {
+      const item = document.createElement('div');
+item.classList.add('sugerencia-item');
+
+item.innerHTML = `
+  <img src="${p.imagen}" alt="${p.nombre}">
+  <div class="info">
+    <strong>${p.nombre}</strong>
+    <span>${p.categoria}</span>
+  </div>
+`;
+
+item.onclick = () => window.location.href = p.url;
+sugerencias.appendChild(item);
+    });
+  } else {
+    const li = document.createElement('li');
+    li.textContent = 'No se encontraron resultados';
+    li.style.color = '#999';
+    sugerencias.appendChild(li);
+  }
+
+  sugerencias.style.display = 'block';
+});
+
+buscador.addEventListener('keydown', (e) => {
+  const items = Array.from(sugerencias.querySelectorAll('.sugerencia-item'));
+  if (e.key === 'ArrowDown') {
+    seleccionado = Math.min(seleccionado + 1, items.length - 1);
+  } else if (e.key === 'ArrowUp') {
+    seleccionado = Math.max(seleccionado - 1, 0);
+  } else if (e.key === 'Enter') {
+    if (seleccionado >= 0 && seleccionado < items.length) {
+      items[seleccionado].click();
+    } else if (items.length > 0) {
+      window.location.href = productos[0].url;
+    }
+  }
+
+  items.forEach((item, i) => {
+    item.classList.toggle('active', i === seleccionado);
+  });
+});
+
+</script>
+
+<div id="modalProducto" class="modal" onclick="cerrarModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="cerrarModal()">×</button>
+    <img id="modalImagen" src="" alt="">
+    <h2 id="modalTitulo"></h2>
+    <p id="modalDescripcion"></p>
+    <button onclick="window.location.href='productos.html'">Ver más</button>
+  </div>
+</div>
+</body>
+</html>
