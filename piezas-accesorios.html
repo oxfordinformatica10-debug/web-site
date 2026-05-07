@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Piezas y Accesorios | Agro UNICORN</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg: #f6f7f8;
+      --white: #ffffff;
+      --muted: #6b6b6b;
+      --accent: #2e7d32;      /* verde agrícola */
+      --accent-2: #f57c00;    /* naranja */
+      --card-shadow: 0 8px 24px rgba(17,17,17,0.06);
+      --radius: 14px;
+      --max-width: 1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    } 
+
+   header{
+      background: #fff;
+      padding: 18px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      position: sticky;
+      top:0;
+      z-index:1500;
+    }
+    .logo{display:flex;align-items:center;cursor:pointer}
+    .logo img{width:44px;height:44px;border-radius:50%;margin-right:12px}
+    .logo span{font-weight:700;color:#0e008b;letter-spacing:0.2px}
+
+    nav a {
+      margin-left: 18px;
+      color: #111;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {color: var(--naranja);}
+    
+
+/* ====== BOTÓN DARK MODE ====== */
+    .dark-toggle {
+      background: none;
+      border: 2px solid var(--text);
+      border-radius: 50%;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 15px;
+    }
+
+/* ====== TOAST GLOBAL ====== */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInOut 3s ease forwards;
+      z-index: 3000;
+    }    
+
+/* ====== Estilo mejorado para el contador del carrito ====== */
+#carritoLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#carritoLink:hover {
+  transform: scale(1.04);
+}
+
+/* Icono del carrito */
+#carritoLink .icono-carrito {
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+/* Contador (burbuja) */
+#contadorCarrito {
+  position: absolute;
+  top: -6px;
+  right: -16px;
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transform-origin: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+}
+
+/* Cuando aparece */
+#contadorCarrito.mostrar {
+  display: flex;
+  opacity: 1;
+}
+
+/* Animación de "pop" */
+@keyframes burbujaPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Animación de vibración del ícono */
+@keyframes vibrarCarrito {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+    /* Hero */
+    .hero{
+      max-width:var(--max-width);
+      margin:36px auto 20px;
+      padding:36px 20px;
+      border-radius:14px;
+      background:linear-gradient(180deg, rgba(245,124,0,0.06), rgba(255,255,255,0));
+      display:flex;gap:24px;align-items:center;
+      box-shadow:0 6px 18px rgba(0,0,0,0.04);
+    }
+    .hero .left{flex:1}
+    .hero h1{margin:0;font-size:28px;color:var(--accent)}
+    .hero p{margin:8px 0 0;color:#444}
+
+    /* Categories overview */
+    .categories{
+      max-width:var(--max-width);
+      margin:30px auto;
+      padding:0 20px 60px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:20px;
+    }
+    @media(max-width:980px){.categories{grid-template-columns:1fr;}}
+    .cat-card{
+      background:var(--surface);
+      border-radius:var(--radius);
+      overflow:hidden;
+      box-shadow:var(--card-shadow);
+      cursor:pointer;
+      transition:transform .22s ease, box-shadow .22s ease;
+      display:flex;flex-direction:column;
+    }
+    .cat-card:hover{transform:translateY(-6px);box-shadow:0 12px 28px rgba(0,0,0,0.08)}
+    .cat-media{height:170px;overflow:hidden}
+    .cat-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .cat-body{padding:18px;display:flex;flex-direction:column;gap:10px}
+    .cat-body h3{margin:0;font-size:1.1rem}
+    .cat-body p{margin:0;color:var(--muted);font-size:0.95rem}
+    .cat-actions{margin-top:auto;display:flex;gap:10px}
+    .btn{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn.ghost{background:transparent;border:1px solid #eee;color:#333}
+
+    /* Category view (expanded) */
+    .category-view{
+      max-width:var(--max-width);
+      margin:30px auto 80px;
+      padding:0 20px;
+      display:none;
+      gap:20px;
+    }
+    .category-header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;
+    }
+    .category-header h2{margin:0;color:var(--accent)}
+    .category-layout{display:grid;grid-template-columns:280px 1fr;gap:20px}
+    @media(max-width:980px){.category-layout{grid-template-columns:1fr}}
+
+    /* Filters */
+    .filters{
+      background:var(--surface);padding:18px;border-radius:12px;box-shadow:var(--card-shadow);
+      position:sticky;top:100px;
+    }
+    .filters h4{margin:0 0 8px 0}
+    .filter-group{margin-bottom:14px}
+    .filter-group label{display:block;margin-bottom:6px;font-weight:700;font-size:.95rem}
+    .filter-group select,.filter-group input{
+      width:100%;padding:9px;border-radius:8px;border:1px solid #ddd;font-size:0.95rem;
+    }
+    .filter-actions{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+    .small{font-size:0.85rem;color:var(--muted)}
+
+    /* Product grid */
+    .products-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+      gap:18px;
+    }
+    .product{
+      background:var(--surface);border-radius:12px;padding:12px;box-shadow:var(--card-shadow);
+      display:flex;flex-direction:column;gap:10px;transition:transform .18s ease;
+    }
+    .product:hover{transform:translateY(-6px)}
+    .product .thumb{height:150px;overflow:hidden;border-radius:10px}
+    .product img{width:100%;height:100%;object-fit:cover;display:block}
+    .product h3{margin:0;font-size:1rem}
+    .meta{color:var(--muted);font-size:0.9rem}
+    .price{font-weight:800;color:var(--accent);font-size:1rem}
+    .product .controls{margin-top:auto;display:flex;gap:8px;align-items:center}
+    .btn-sm{padding:8px 10px;border-radius:8px;border:0;font-weight:700;cursor:pointer}
+    .btn-add{background:var(--accent);color:#fff}
+    .btn-details{background:#f3f3f3;color:#222;border:1px solid #eee}
+
+    /* Modal producto */
+    .modal{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);z-index:2200;
+    }
+    .modal .panel{background:#fff;border-radius:12px;padding:18px;max-width:920px;width:92%;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    @media(max-width:980px){.modal .panel{grid-template-columns:1fr}}
+    .gallery{display:flex;flex-direction:column;gap:8px}
+    .gallery .main{height:300px;overflow:hidden;border-radius:10px}
+    .gallery .thumbs{display:flex;gap:8px}
+    .gallery .thumbs img{width:60px;height:60px;object-fit:cover;border-radius:6px;cursor:pointer;border:1px solid #eee}
+    .modal .info h2{margin:0;color:var(--accent)}
+    .modal .info p{color:var(--muted)}
+    .modal .info .spec{margin:8px 0;padding:10px;background:#fafafa;border-radius:8px;border:1px solid #eee}
+    .modal .actions{display:flex;gap:10px;margin-top:12px}
+    .close-x{position:absolute;top:14px;right:18px;background:transparent;border:0;font-size:20px;cursor:pointer}
+
+    /* small helpers */
+    .hidden{display:none!important}
+    .center{text-align:center}
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: #000;
+      color: #aaa;
+      padding: 40px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo" onclick="location.href='UNICORN.html'">
+      <img src="https://agro.unicorn.com.co/web/image/16724/20200424%20auls_planobordeazul_v1.png" alt="Logo UNICORN" />
+      <span>AGRO UNICORN</span>
+    </div>
+    <nav aria-label="Navegación principal">
+      <a href="productos.html">Productos</a>
+      <a href="piezas-accesorios.html">Piezas y Accesorios</a>
+      <a href="carrito.html" id="carritoLink" aria-label="Ver carrito">
+  <span class="icono-carrito">🛒</span>
+  <span style="font-weight:700;">Carrito</span>
+  <span id="contadorCarrito" aria-live="polite">0</span>
+</a>
+      <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero" role="banner" aria-labelledby="hero-title">
+    <div class="left">
+      <h1 id="hero-title">Piezas, repuestos y accesorios</h1>
+      <p>Encuentra accesorios de protección, lubricantes y repuestos originales para mantener tu maquinaria en óptimas condiciones.</p>
+    </div>
+    <div class="right center" aria-hidden="true" style="min-width:220px">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMBoWLlr7Tds3hfcsFE6egjRZZMyT6CfynBQ&s" alt="" style="width:220px;height:140px;object-fit:cover;border-radius:10px">
+    </div>
+  </div>
+
+  <!-- CATEGORIES OVERVIEW -->
+  <section class="categories" aria-label="categorías">
+    <article class="cat-card" data-cat="accesorios" onclick="openCategory('accesorios')">
+      <div class="cat-media"><img src="https://agro.unicorn.com.co/web/image/23219/Agrounicorn%20-%20Accesorios.jpg" alt="Accesorios"></div>
+      <div class="cat-body">
+        <h3>Accesorios</h3>
+        <p>Elementos de protección personal y complementos de la maquinaria comercializada para su puesta en operación.</p>
+        <div class="cat-actions"><button class="btn" onclick="openCategory('accesorios', event)">Ver más</button><button class="btn ghost" onclick="scrollToTop(event)">Explorar</button></div>
+      </div>
+    </article>
+
+    <article class="cat-card" data-cat="lubricantes" onclick="openCategory('lubricantes')">
+      <div class="cat-media"><img src="https://agro.unicorn.com.co/web/image/23215/agrounicorn%20-%20Grasa-Lubricante-Multiprop%C3%B3sito.jpg" alt="Lubricantes"></div>
+      <div class="cat-body">
+        <h3>Lubricantes</h3>
+        <p>Aceite para motores 2T y 4T, Aceite para cadena, Grasa litio.</p>
+        <div class="cat-actions"><button class="btn" onclick="openCategory('lubricantes', event)">Ver más</button><button class="btn ghost" onclick="scrollToTop(event)">Explorar</button></div>
+      </div>
+    </article>
+
+    <article class="cat-card" data-cat="repuestos" onclick="openCategory('repuestos')">
+      <div class="cat-media"><img src="https://agro.unicorn.com.co/web/image/23217/AgroUnicorn%20Repuestos.jpg" alt="Repuestos"></div>
+      <div class="cat-body">
+        <h3>Repuestos</h3>
+        <p>Repuestos para todas las referencias de maquinaria que comercializamos.</p>
+        <div class="cat-actions"><button class="btn" onclick="openCategory('repuestos', event)">Ver más</button><button class="btn ghost" onclick="scrollToTop(event)">Explorar</button></div>
+      </div>
+    </article>
+  </section>
+
+  <!-- DYNAMIC CATEGORY VIEW -->
+  <section class="category-view" id="categoryView" aria-live="polite">
+    <div class="category-header">
+      <h2 id="categoryTitle">Categoría</h2>
+      <div>
+        <button class="btn ghost" onclick="closeCategory()">Volver</button>
+      </div>
+    </div>
+
+    <div class="category-layout">
+      <aside class="filters" aria-label="Filtros">
+        <h4>Filtros</h4>
+
+        <div class="filter-group">
+          <label for="searchInput">Buscar</label>
+          <input id="searchInput" placeholder="Busca por nombre..." />
+        </div>
+
+        <div class="filter-group">
+          <label for="filterTipo">Tipo</label>
+          <select id="filterTipo"><option value="">Todos</option></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterMarca">Marca</label>
+          <select id="filterMarca"><option value="">Todas</option></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filterCompat">Compatibilidad</label>
+          <select id="filterCompat"><option value="">Todas</option></select>
+        </div>
+
+        <div class="filter-group">
+          <label for="sortPrice">Ordenar</label>
+          <select id="sortPrice">
+            <option value="">Predeterminado</option>
+            <option value="asc">Precio: menor → mayor</option>
+            <option value="desc">Precio: mayor → menor</option>
+          </select>
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn" onclick="applyFilters()">Aplicar</button>
+          <button class="btn ghost" onclick="resetFilters()">Limpiar</button>
+        </div>
+
+        <p class="small" style="margin-top:12px">Resultados: <span id="resultsCount">0</span></p>
+      </aside>
+
+      <main style="padding:0">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3 id="categorySubtitle" style="margin:0;color:#333"></h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <label class="small">Mostrar:</label>
+            <select id="perPage" onchange="renderProducts()">
+              <option value="9">9 por página</option>
+              <option value="18">18 por página</option>
+              <option value="36">36 por página</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="productsGrid" class="products-grid" aria-live="polite"></div>
+
+        <div style="margin-top:18px;display:flex;justify-content:center;">
+          <button class="btn ghost" id="loadMoreBtn" onclick="loadMore()">Cargar más</button>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- PRODUCT MODAL -->
+  <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="panel" role="document">
+      <button class="close-x" aria-label="Cerrar" onclick="closeModal()">✖</button>
+
+      <div class="gallery">
+        <div class="main" id="modalMainImage"><img src="" alt="" style="width:100%;height:100%;object-fit:cover"></div>
+        <div class="thumbs" id="modalThumbs"></div>
+      </div>
+
+      <div class="info">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc" class="meta"></p>
+
+        <div class="spec" id="modalSpec"></div>
+
+        <p style="margin-top:8px"><span class="price" id="modalPrice"></span></p>
+
+        <div class="actions">
+          <button class="btn-sm btn-add" id="modalAddBtn">Agregar al carrito</button>
+          <button class="btn-sm btn-details" onclick="closeModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer accesible -->
+  <footer style="background-color: #111; color: #fff; padding: 40px 20px; font-size: 0.9rem;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto;">
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px; color: #fff;">UNICORN</h4>
+      <p>Maquinaria de calidad para el campo colombiano desde 1995.</p>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Productos</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="campo-jardin.html" style="color: #ccc; text-decoration: none;">Campo y Jardín</a></li>
+        <li><a href="manejo-agua.html" style="color: #ccc; text-decoration: none;">Manejo de Agua</a></li>
+        <li><a href="fumigacion.html" style="color: #ccc; text-decoration: none;">Fumigación</a></li>
+        <li><a href="manejo-energia.html" style="color: #ccc; text-decoration: none;">Manejo de Energía</a></li>
+        <li><a href="construccion.html" style="color: #ccc; text-decoration: none;">Construcción</a></li>
+        <li><a href="ferreteria.html" style="color: #ccc; text-decoration: none;">Ferretería</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Empresa</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sobre nosotros</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sucursales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Blog</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Soporte</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Contacto</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Garantía</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Manuales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Centro técnico</a></li>
+      </ul>
+    </div>
+
+    <!-- (enlaces de productos, empresa, soporte se mantienen igual) -->
+    
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Síguenos</h4>
+      <div style="margin: 10px; display: 20px flex; gap: 40px;">
+        <a href="https://www.facebook.com/agrounicorn.bogota" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" style="width: 24px;"></a>
+        <a href="https://www.instagram.com/agro_unicorn" target="_blank"><img src="https://encrypted-tbn3.gstatic.com/favicon-tbn?q=tbn:ANd9GcTI-5PGHmIaNROji4Au1BCHWlIYYuBV-S5o10vNQOpO8bKYe_6qoBk4-ZuXaoJFuMvh4TIqxnwOPvBj23km7XY2pAb98oE7qC3Akz3TL6SOymq5kX9Qzg" style="width: 24px;"></a>
+        <a href="https://www.tiktok.com/@agro_unicorn" target="_blank"><img src="https://encrypted-tbn3.gstatic.com/favicon-tbn?q=tbn:ANd9GcSEII2IIRImodcWZgz02fSWMJAoch4dG8QOVwhrtt_QvRi6NJLy8IjW1yAqU5ugCsqWjUeYJzz8ETnsSGPCArXzGmknKGS3PlAQHOi_1GEZqoL3vw" style="width: 24px;"></a>
+        <a href="https://www.youtube.com/@agro-unicorn" target="_blank"><img src="https://static.vecteezy.com/system/resources/previews/023/986/704/non_2x/youtube-logo-youtube-logo-transparent-youtube-icon-transparent-free-free-png.png" style="width: 24px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center; color: #aaa;">
+    © 2025 UNICORN. Todos los derechos reservados. | <a href="#" style="color: #aaa;">Política de privacidad</a>
+  </div>
+</footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({duration:700,once:true});
+  </script>
+
+  <script>
+    /* -------------------------
+       DATA (muestra, editable)
+       ------------------------- */
+    const CATALOG = [
+      // Accesorios
+      { id: 'acc-001', cat:'accesorios', tipo:'Protección', marca:'Unicorn', compat:['Motosierras'], titulo:'Casco protector con visera', imagens:[
+        'https://images.unsplash.com/photo-1547454285-6f4b5c5f2d6f?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Casco con visera y orejeras, protección completa.', precio:250000 },
+
+      { id: 'acc-002', cat:'accesorios', tipo:'Protección', marca:'Husqvarna', compat:['Motosierras','Desbrozadoras'], titulo:'Guantes anti-corte', imagens:[
+        'https://images.unsplash.com/photo-1600181950460-3d8c4e8b8f1a?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Guantes con protección anti-corte y buen agarre.', precio:120000 },
+
+      { id: 'acc-003', cat:'accesorios', tipo:'Accesorio', marca:'Stihl', compat:['Motosierras'], titulo:'Funda para motosierra', imagens:[
+        'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Funda resistente para transporte y almacenamiento.', precio:45000 },
+
+      // Lubricantes
+      { id: 'lub-001', cat:'lubricantes', tipo:'Aceite 2T', marca:'Husqvarna', compat:['Motosierras'], titulo:'Aceite 2T 1L', imagens:[
+        'https://images.unsplash.com/photo-1611078487088-5a6b1a3e3d5a?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Aceite 2T formulado para motores pequeños.', precio:45000 },
+
+      { id: 'lub-002', cat:'lubricantes', tipo:'Grasa', marca:'Stihl', compat:['General'], titulo:'Grasa multiuso 80g', imagens:[
+        'https://images.unsplash.com/photo-1526401281623-3f4b9e6a8f3f?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Grasa de alta adherencia para engranajes.', precio:38000 },
+
+      // Repuestos
+      { id: 'rep-001', cat:'repuestos', tipo:'Cadena', marca:'Husqvarna', compat:['Motosierras'], titulo:'Cadena 18”', imagens:[
+        'https://images.unsplash.com/photo-1558655146-dc7f9d3d6a6f?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Cadena de alto rendimiento para cortes precisos.', precio:95000 },
+
+      { id: 'rep-002', cat:'repuestos', tipo:'Filtro', marca:'Stihl', compat:['Motosierras','Generadores'], titulo:'Filtro de aire universal', imagens:[
+        'https://images.unsplash.com/photo-1543785734-4f4a1b3b5c4f?q=80&w=1200&auto=format&fit=crop'
+      ], descripcion:'Filtro de aire de reemplazo para motores pequeños.', precio:42000 },
+
+      // Más productos para probar paginación/filtrado
+      { id: 'acc-004', cat:'accesorios', tipo:'Protección', marca:'Unicorn', compat:['Motosierras'], titulo:'Careta de protección', imagens:['https://images.unsplash.com/photo-1584467735859-9aef8a4d6b4e?q=80&w=1200&auto=format&fit=crop'], descripcion:'Careta con ventilación.', precio:80000 },
+      { id: 'acc-005', cat:'accesorios', tipo:'Accesorio', marca:'Bellota', compat:['General'], titulo:'Lima de cadena', imagens:['https://images.unsplash.com/photo-1603319193843-0d6b2f9c6a58?q=80&w=1200&auto=format&fit=crop'], descripcion:'Lima para afilar cadenas.', precio:12000 },
+      { id: 'rep-003', cat:'repuestos', tipo:'Bujía', marca:'NGK', compat:['Generadores'], titulo:'Bujía NGK', imagens:['https://images.unsplash.com/photo-1581092795360-3d1a8a9a7b3f?q=80&w=1200&auto=format&fit=crop'], descripcion:'Bujía de alto rendimiento.', precio:30000 },
+      // ... añade más productos reales aquí
+    ];
+
+    /* -------------------------
+       Estado y utilidades
+       ------------------------- */
+    let CURRENT_CATEGORY = null;
+    let FILTER_STATE = {search:'', tipo:'', marca:'', compat:'', sort:'', perPage:9, page:1};
+    let VISIBLE_PRODUCTS = [];
+
+    function formatCOP(n){
+      return n.toLocaleString('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});
+    }
+
+    function parsePriceDisplay(n){
+      return formatCOP(n);
+    }
+
+    /* -------------------------
+       UI: open / close category
+       ------------------------- */
+    function openCategory(cat, ev){
+      if(ev) ev.stopPropagation();
+      CURRENT_CATEGORY = cat;
+      document.getElementById('categoryView').style.display = 'block';
+      document.querySelector('.categories').style.display = 'none';
+      // header text
+      const titleMap = {accesorios:'Accesorios', lubricantes:'Lubricantes', repuestos:'Repuestos'};
+      document.getElementById('categoryTitle').textContent = titleMap[cat] || 'Categoría';
+      document.getElementById('categorySubtitle').textContent = `${titleMap[cat]} • ${getCategoryCount(cat)} productos`;
+      // reset filters
+      resetFilters(true);
+      prepareFiltersFor(cat);
+      applyFilters();
+      // smooth scroll to top
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function closeCategory(){
+      document.getElementById('categoryView').style.display = 'none';
+      document.querySelector('.categories').style.display = '';
+      CURRENT_CATEGORY = null;
+      FILTER_STATE = {search:'', tipo:'', marca:'', compat:'', sort:'', perPage:9, page:1};
+    }
+
+    function scrollToTop(e){ if(e) e.stopPropagation(); window.scrollTo({top:0,behavior:'smooth'}); }
+
+    /* -------------------------
+       Filters: populate options
+       ------------------------- */
+    function getCategoryCount(cat){
+      return CATALOG.filter(p=>p.cat===cat).length;
+    }
+
+    function prepareFiltersFor(cat){
+      // gather unique tipos, marcas, compat
+      const items = CATALOG.filter(p=>p.cat===cat);
+      const tipos = Array.from(new Set(items.map(p=>p.tipo))).sort();
+      const marcas = Array.from(new Set(items.map(p=>p.marca))).sort();
+      const compats = Array.from(new Set(items.flatMap(p=>p.compat))).sort();
+
+      const tipoSel = document.getElementById('filterTipo');
+      const marcaSel = document.getElementById('filterMarca');
+      const compatSel = document.getElementById('filterCompat');
+
+      // clear
+      tipoSel.innerHTML = '<option value="">Todos</option>';
+      marcaSel.innerHTML = '<option value="">Todas</option>';
+      compatSel.innerHTML = '<option value="">Todas</option>';
+
+      tipos.forEach(t => tipoSel.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(t)}">${t}</option>`));
+      marcas.forEach(m => marcaSel.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(m)}">${m}</option>`));
+      compats.forEach(c => compatSel.insertAdjacentHTML('beforeend', `<option value="${escapeHtml(c)}">${c}</option>`));
+
+      // Search input reset
+      document.getElementById('searchInput').value = '';
+    }
+
+    function escapeHtml(s){ return String(s).replaceAll('"','&quot;'); }
+
+    /* -------------------------
+       Apply / reset filters
+       ------------------------- */
+    function resetFilters(skipRender){
+      FILTER_STATE = {
+        search: '',
+        tipo: '',
+        marca: '',
+        compat: '',
+        sort: document.getElementById('sortPrice') ? document.getElementById('sortPrice').value : '',
+        perPage: parseInt(document.getElementById('perPage') ? document.getElementById('perPage').value : 9),
+        page: 1
+      };
+      if(!skipRender) applyFilters();
+    }
+
+    function applyFilters(){
+      const s = document.getElementById('searchInput').value.trim().toLowerCase();
+      const tipo = document.getElementById('filterTipo').value;
+      const marca = document.getElementById('filterMarca').value;
+      const compat = document.getElementById('filterCompat').value;
+      const sort = document.getElementById('sortPrice').value;
+      const perPage = parseInt(document.getElementById('perPage').value)||9;
+
+      FILTER_STATE.search = s;
+      FILTER_STATE.tipo = tipo;
+      FILTER_STATE.marca = marca;
+      FILTER_STATE.compat = compat;
+      FILTER_STATE.sort = sort;
+      FILTER_STATE.perPage = perPage;
+      FILTER_STATE.page = 1;
+
+      // filter dataset
+      let list = CATALOG.filter(p => p.cat === CURRENT_CATEGORY);
+      if(s) list = list.filter(p => (p.titulo + ' ' + p.descripcion + ' ' + p.marca).toLowerCase().includes(s));
+      if(tipo) list = list.filter(p => p.tipo === tipo);
+      if(marca) list = list.filter(p => p.marca === marca);
+      if(compat) list = list.filter(p => p.compat.includes(compat));
+
+      // sort
+      if(sort === 'asc') list.sort((a,b)=>a.precio - b.precio);
+      else if(sort === 'desc') list.sort((a,b)=>b.precio - a.precio);
+
+      VISIBLE_PRODUCTS = list;
+      renderProducts();
+    }
+
+    /* -------------------------
+       Pagination / render products
+       ------------------------- */
+    function renderProducts(){
+      const grid = document.getElementById('productsGrid');
+      const countEl = document.getElementById('resultsCount');
+      const perPage = parseInt(document.getElementById('perPage').value) || 9;
+
+      const page = FILTER_STATE.page || 1;
+      const start = (page-1)*perPage;
+      const end = start + perPage;
+      const pageItems = VISIBLE_PRODUCTS.slice(0, end); // load more pattern
+
+      grid.innerHTML = '';
+      if(!pageItems.length){
+        grid.innerHTML = '<p style="color:#666">No se encontraron productos con esos criterios.</p>';
+        countEl.textContent = '0';
+        document.getElementById('loadMoreBtn').style.display = 'none';
+        return;
+      }
+
+      pageItems.forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'product';
+        card.innerHTML = `
+          <div class="thumb"><img src="${p.imagensrc || p.imagensrc|| p.imagen || p.imagensrc}" alt="${escapeHtml(p.titulo)}" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x300?text=Imagen'"></div>
+          <h3 title="${escapeHtml(p.titulo)}">${p.titulo}</h3>
+          <div class="meta">${p.marca} • ${p.tipo}</div>
+          <div class="price">${formatCOP(p.precio)}</div>
+          <div class="controls">
+            <button class="btn-sm btn-add" onclick="showProductModal('${p.id}')">Ver</button>
+            <button class="btn-sm btn-details" onclick="addToCartFromList('${p.id}')">Agregar</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // results count and load more button
+      countEl.textContent = VISIBLE_PRODUCTS.length;
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      if(VISIBLE_PRODUCTS.length > pageItems.length){
+        loadMoreBtn.style.display = 'inline-block';
+      } else {
+        loadMoreBtn.style.display = 'none';
+      }
+    }
+
+    function loadMore(){
+      FILTER_STATE.page = (FILTER_STATE.page || 1) + 1;
+      renderProducts();
+    }
+
+    /* -------------------------
+       Modal product details
+       ------------------------- */
+    const productModal = document.getElementById('productModal');
+    const modalMainImage = document.getElementById('modalMainImage');
+    const modalThumbs = document.getElementById('modalThumbs');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalSpec = document.getElementById('modalSpec');
+    const modalPrice = document.getElementById('modalPrice');
+    const modalAddBtn = document.getElementById('modalAddBtn');
+
+    let CURRENT_PRODUCT = null;
+
+    function showProductModal(id){
+      const p = CATALOG.find(x=>x.id===id);
+      if(!p) return;
+      CURRENT_PRODUCT = p;
+
+      // main image
+      modalMainImage.innerHTML = `<img src="${p.imagensrc||p.imagens||p.imagensrc||p.imagens|| p.imagensrc || p.imagens || p.imagens || p.imagen || p.imagensrc || p.imagens || p.imagens || p.imagens || (p.imagens && p.imagens[0]) || (p.imagens && p.imagens[0])}" alt="${escapeHtml(p.titulo)}" onerror="this.onerror=null;this.src='https://via.placeholder.com/800x600?text=Imagen'">`;
+
+      // thumbs
+      modalThumbs.innerHTML = '';
+      const imgs = Array.isArray(p.imagens) && p.imagens.length ? p.imagens : (p.imagensrc ? [p.imagensrc] : [(p.imagen || '')]);
+      imgs.forEach((src, i) => {
+        const imgEl = document.createElement('img');
+        imgEl.src = src;
+        imgEl.alt = p.titulo + ' ' + (i+1);
+        imgEl.onclick = ()=> {
+          modalMainImage.querySelector('img').src = src;
+        };
+        modalThumbs.appendChild(imgEl);
+      });
+
+      modalTitle.textContent = p.titulo;
+      modalDesc.textContent = p.descripcion || '';
+      modalSpec.innerHTML = `<strong>Compatibilidad:</strong> ${p.compat.join(', ')}<br><strong>Marca:</strong> ${p.marca}`;
+      modalPrice.textContent = formatCOP(p.precio);
+      modalAddBtn.onclick = ()=> addToCartFromModal(p);
+
+      // show modal
+      productModal.style.display = 'flex';
+      productModal.setAttribute('aria-hidden','false');
+    }
+
+    function closeModal(){
+      productModal.style.display = 'none';
+      productModal.setAttribute('aria-hidden','true');
+      CURRENT_PRODUCT = null;
+    }
+
+    // close on outside click or ESC
+    productModal.addEventListener('click', (e)=>{
+      if(e.target === productModal) closeModal();
+    });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+    /* -------------------------
+       Cart: add / storage / counter
+       ------------------------- */
+    function addToCartFromModal(product){
+      addToCart({ titulo: product.titulo, imagen: (product.imagens && product.imagens[0]) || product.imagen || '', precio: formatCOP(product.precio) });
+      // small feedback
+      modalAddBtn.textContent = 'Agregado ✓';
+      setTimeout(()=>{ modalAddBtn.textContent = 'Agregar al carrito'; closeModal(); }, 700);
+    }
+
+    function addToCartFromList(id){
+      const p = CATALOG.find(x=>x.id===id);
+      if(!p) return;
+      addToCart({ titulo: p.titulo, imagen: (p.imagens && p.imagens[0]) || p.imagen || '', precio: formatCOP(p.precio) });
+      // visual confirmation could be added
+    }
+
+    function addToCart(item){
+      if(!item || !item.titulo) return;
+      const raw = localStorage.getItem('carrito');
+      const carrito = raw ? JSON.parse(raw) : [];
+      const existing = carrito.find(x => x.titulo === item.titulo);
+      if(existing) existing.cantidad = (existing.cantidad || 1) + 1;
+      else carrito.push({ titulo: item.titulo, imagen: item.imagen || '', precio: item.precio || '$0', cantidad: 1 });
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+      actualizarContadorGlobal();
+      // toast
+      showToast(`🛒 Añadido: ${item.titulo}`);
+    }
+
+    /* contador global */
+    function actualizarContadorGlobal(){
+      const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+      const total = carrito.reduce((acc,p)=>acc + (p.cantidad || 0), 0);
+      const badge = document.getElementById('contadorCarrito');
+      if(total > 0){
+        badge.textContent = total;
+        badge.classList.add('mostrar');
+        badge.style.display = 'inline-block';
+        // small pop
+        badge.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],{duration:300});
+      } else {
+        badge.textContent = 0;
+        badge.classList.remove('mostrar');
+        badge.style.display = 'none';
+      }
+    }
+
+    /* small toast */
+    function showToast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      Object.assign(t.style,{position:'fixed',right:'18px',bottom:'18px',background:'var(--accent)',color:'#fff',padding:'10px 14px',borderRadius:'8px',boxShadow:'0 8px 20px rgba(0,0,0,0.15)',zIndex:3000});
+      document.body.appendChild(t);
+      setTimeout(()=>t.style.opacity='0',2200);
+      setTimeout(()=>t.remove(),2600);
+    }
+
+    /* -------------------------
+       Init on load
+       ------------------------- */
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // init counter
+      actualizarContadorGlobal();
+
+      // fill categories counts / maybe dynamic badges if needed
+      // hide load more by default
+      document.getElementById('loadMoreBtn').style.display = 'none';
+
+      // wire up filter inputs to apply on enter
+      document.getElementById('searchInput').addEventListener('keypress', (e)=>{ if(e.key === 'Enter') applyFilters(); });
+
+      // initial no category: show categories (already default)
+    });
+
+    /* -------------------------
+       Helpers for safety & formatting
+       ------------------------- */
+    function formatCOP(n){
+      if(typeof n !== 'number') n = Number(n) || 0;
+      return n.toLocaleString('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});
+    }
+  </script>
+</body>
+</html>

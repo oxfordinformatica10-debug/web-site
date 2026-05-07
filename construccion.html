@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Campo y Jardín | Agro UNICORN</title>
+
+<!-- Fuentes y AOS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root{
+    --bg: #f6f7f8;
+      --white: #ffffff;
+      --muted: #6b6b6b;
+      --accent: #2e7d32;      /* verde agrícola */
+      --accent-2: #f57c00;    /* naranja */
+      --card-shadow: 0 8px 24px rgba(17,17,17,0.06);
+      --radius: 14px;
+      --max-width: 1200px;
+    --brand-blue:#0a2342;
+    --brand-accent:#f57c00;
+    --header-h:68px;
+    --hero-img: url('https://humanidades.com/wp-content/uploads/2016/04/campo-1-e1558303226877.jpg');
+    --hero-title: "Campo y Jardín";
+    --hero-subtitle: "Equipos robustos y confiables para el mantenimiento agrícola y del hogar.";
+  }
+  *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    } 
+
+   header{
+      background: #fff;
+      padding: 18px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      position: sticky;
+      top:0;
+      z-index:1500;
+    }
+    .logo{display:flex;align-items:center;cursor:pointer}
+    .logo img{width:44px;height:44px;border-radius:50%;margin-right:12px}
+    .logo span{font-weight:700;color:#0e008b;letter-spacing:0.2px}
+
+    nav a {
+      margin-left: 18px;
+      color: #111;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {color: var(--naranja);}
+    
+
+/* ====== BOTÓN DARK MODE ====== */
+    .dark-toggle {
+      background: none;
+      border: 2px solid var(--text);
+      border-radius: 50%;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 15px;
+    }
+
+/* ====== TOAST GLOBAL ====== */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInOut 3s ease forwards;
+      z-index: 3000;
+    }    
+
+/* ====== Estilo mejorado para el contador del carrito ====== */
+#carritoLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#carritoLink:hover {
+  transform: scale(1.04);
+}
+
+/* Icono del carrito */
+#carritoLink .icono-carrito {
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+/* Contador (burbuja) */
+#contadorCarrito {
+  position: absolute;
+  top: -6px;
+  right: -16px;
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transform-origin: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+}
+
+/* Cuando aparece */
+#contadorCarrito.mostrar {
+  display: flex;
+  opacity: 1;
+}
+
+/* Animación de "pop" */
+@keyframes burbujaPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Animación de vibración del ícono */
+@keyframes vibrarCarrito {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+  .hero{height:46vh;min-height:280px;background:var(--hero-img) center/cover no-repeat;display:flex;align-items:center;justify-content:center;position:relative}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.25))}
+  .hero-content{position:relative;z-index:2;color:#fff;text-align:center;padding:18px;max-width:980px}
+  .hero h1{font-size:2.3rem;margin-bottom:6px;font-weight:700}
+  .hero p{color:#e9e9e9;font-size:1.02rem}
+
+  .container{max-width:1200px;margin:22px auto;padding:0 18px}
+  .layout{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start}
+
+  /* ASIDE filtros */
+  aside.filtros{position:sticky;top:calc(var(--header-h) + 12px);padding:18px;border-radius:12px;border:1px solid #f0f0f0;background:#fff;box-shadow:0 6px 20px rgba(12,22,40,.06)}
+  aside.filtros h3{color:var(--brand-blue);margin-bottom:10px;font-size:1.05rem}
+  .filtro-group{margin-bottom:12px}
+  .filtro-group label{display:block;font-weight:700;color:#444;margin-bottom:8px;font-size:.92rem}
+  .filtro-group select,.filtro-group input{width:100%;padding:10px;border-radius:8px;border:1px solid #ececec;background:#fafafa;font-weight:700}
+  .filtros-actions{display:flex;gap:10px;margin-top:10px}
+  .btn-aplicar{flex:1;background:var(--brand-accent);color:#fff;border:0;padding:10px;border-radius:10px;font-weight:800;cursor:pointer}
+  .btn-limpiar{flex:1;background:#f3f3f3;color:#222;border:1px solid #e6e6e6;padding:10px;border-radius:10px;font-weight:800;cursor:pointer}
+
+  /* Productos grid */
+  .productos-section h2{font-size:1.9rem;color:var(--brand-blue);margin-bottom:12px}
+  .controls-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}
+  .resultado{color:#666;font-weight:700}
+  .orden select{padding:8px 10px;border-radius:8px;border:1px solid #eaeaea}
+
+  .productos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;position:relative}
+  .producto-card{background:#fff;border-radius:14px;border:1px solid #f3f3f3;box-shadow:0 6px 18px rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .28s,box-shadow .28s}
+  .producto-card:hover{transform:translateY(-8px);box-shadow:0 18px 40px rgba(12,22,40,.1)}
+  .producto-media{height:220px;background:#fafafa;position:relative;overflow:hidden}
+  .producto-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s}
+  .producto-card:hover .producto-media img{transform:scale(1.06)}
+  .producto-badge{position:absolute;top:12px;left:12px;background:var(--brand-accent);color:#fff;padding:6px 10px;border-radius:8px;font-weight:800;font-size:.85rem;box-shadow:0 8px 22px rgba(245,124,0,.14)}
+  .producto-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .producto-body h3{font-size:1.02rem;color:var(--brand-blue);font-weight:800}
+  .meta{color:#666;font-size:.92rem}
+  .precio-line{margin-top:auto;display:flex;align-items:center;gap:10px}
+  .precio-oferta{color:var(--brand-accent);font-weight:900;font-size:1.05rem}
+  .precio-original{color:#9b9b9b;text-decoration:line-through;font-weight:700;font-size:.95rem}
+  .add-wrap{display:flex;justify-content:center;margin-top:12px}
+  .add-to-cart{background:var(--brand-accent);color:#fff;border-radius:999px;padding:10px 16px;border:0;font-weight:800;cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity .22s,transform .22s}
+  .producto-card:hover .add-to-cart{opacity:1;transform:translateY(0)}
+
+  .no-results{padding:36px;text-align:center;color:#666;font-weight:800}
+
+  /* spinner */
+  .spinner-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.62);z-index:30;border-radius:8px}
+  .spinner{width:44px;height:44px;border-radius:50%;border:4px solid rgba(0,0,0,.08);border-top-color:var(--brand-accent);animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* modal */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:3000;align-items:center;justify-content:center;padding:20px}
+  .modal.show{display:flex}
+  .modal-card{background:#fff;border-radius:12px;padding:18px;max-width:920px;width:100%;display:grid;grid-template-columns:1fr 380px;gap:18px;position:relative}
+  .modal-close{position:absolute;right:14px;top:10px;background:transparent;border:0;font-size:1.2rem;cursor:pointer}
+  .modal-main img{width:100%;height:420px;object-fit:contain;border-radius:8px;background:#f9f9f9}
+  .thumbs{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+  .thumbs img{width:64px;height:64px;object-fit:cover;border-radius:6px;cursor:pointer;border:2px solid transparent}
+  .thumbs img.selected{border-color:var(--brand-accent)}
+  .modal-info h2{color:var(--brand-blue);margin-bottom:8px}
+  .modal-info p{color:#444;margin-bottom:12px}
+  .modal-info .modal-price{color:var(--brand-accent);font-weight:900;font-size:1.15rem;margin-bottom:12px}
+  .modal-info .modal-add{background:var(--brand-accent);color:#fff;padding:10px 16px;border:0;border-radius:10px;font-weight:800;cursor:pointer}
+
+  @media (max-width:980px){
+    .layout{grid-template-columns:1fr}
+    .modal-card{grid-template-columns:1fr;max-width:720px}
+    .modal-main img{height:320px}
+  }
+
+  /* ===== FOOTER ===== */
+    footer {
+      background-color: #000;
+      color: #aaa;
+      padding: 40px;
+      text-align: center;
+    }
+</style>
+</head>
+<body>
+<header>
+    <div class="logo" onclick="location.href='UNICORN.html'">
+      <img src="https://agro.unicorn.com.co/web/image/16724/20200424%20auls_planobordeazul_v1.png" alt="Logo UNICORN" />
+      <span>AGRO UNICORN</span>
+    </div>
+    <nav aria-label="Navegación principal">
+      <a href="productos.html">Productos</a>
+      <a href="piezas-accesorios.html">Piezas y Accesorios</a>
+      <a href="carrito.html" id="carritoLink" aria-label="Ver carrito">
+  <span class="icono-carrito">🛒</span>
+  <span style="font-weight:700;">Carrito</span>
+  <span id="contadorCarrito" aria-live="polite">0</span>
+</a>
+      <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+    </nav>
+  </header>
+
+<section class="hero" role="banner" aria-label="Banner">
+  <div class="hero-content">
+    <h1 id="heroTitle">Campo y Jardín</h1>
+    <p id="heroSubtitle">Equipos robustos y confiables para el mantenimiento agrícola y del hogar.</p>
+  </div>
+</section>
+
+<div class="container">
+  <div class="layout">
+    <main>
+      <section class="productos-section" aria-live="polite">
+        <div class="controls-row">
+          <div class="resultado" id="resultadoCount">Mostrando 0 productos</div>
+          <div class="orden">
+            <label style="display:none">Orden</label>
+            <select id="orden" aria-label="Ordenar productos">
+              <option value="relevancia">Relevancia</option>
+              <option value="menor">Precio: menor a mayor</option>
+              <option value="mayor">Precio: mayor a menor</option>
+            </select>
+          </div>
+        </div>
+
+        <h2>Productos destacados</h2>
+
+        <div id="productosGrid" class="productos-grid">
+          <!-- Ejemplos de productos: edítalos / añade otros con data-* -->
+          <article class="producto-card"
+            data-titulo="Ahoyador Beaver AG52"
+            data-marca="Beaver"
+            data-tipo="Ahoyador"
+            data-motor="Gasolina"
+            data-cilindraje="52"
+            data-precio-original="1020000"
+            data-precio-oferta="1020000"
+            data-disponible="true"
+            data-imgs="https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f,https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=b4cfa32"
+            data-desc="Potente ahoyador de 52cc, ideal para terrenos duros y agrícolas.">
+            <div class="producto-media"></div>
+            <div class="producto-body">
+              <h3>Ahoyador Beaver AG52</h3>
+              <div class="meta">Marca: Beaver · Motor: Gasolina · 52cc</div>
+              <div class="precio-line"><div class="precio-oferta"></div><div class="precio-original"></div></div>
+              <div class="add-wrap"><button class="add-to-cart" aria-label="Agregar Ahoyador">Añadir</button></div>
+            </div>
+          </article>
+
+          <article class="producto-card"
+            data-titulo="Motobomba Forte DJ50"
+            data-marca="Forte"
+            data-tipo="Motobomba"
+            data-motor="Gasolina"
+            data-cilindraje="50"
+            data-precio-original="930000"
+            data-precio-oferta="816000"
+            data-disponible="true"
+            data-imgs="https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1"
+            data-desc="Motobomba Forte DJ50 en aluminio, autocebante y eficiente.">
+            <div class="producto-media"></div>
+            <div class="producto-body">
+              <h3>Motobomba Forte DJ50</h3>
+              <div class="meta">Marca: Forte · Motor: Gasolina · 50cc</div>
+              <div class="precio-line"><div class="precio-oferta"></div><div class="precio-original"></div></div>
+              <div class="add-wrap"><button class="add-to-cart">Añadir</button></div>
+            </div>
+          </article>
+
+          <article class="producto-card"
+            data-titulo="Fumigadora Royal Condor 20L"
+            data-marca="Royal Condor"
+            data-tipo="Fumigadora"
+            data-motor="Manual"
+            data-cilindraje="0"
+            data-precio-original="336600"
+            data-precio-oferta="336600"
+            data-disponible="true"
+            data-imgs="https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d"
+            data-desc="Fumigadora manual, ligera y ergonómica, ideal para cultivos a pequeña escala.">
+            <div class="producto-media"></div>
+            <div class="producto-body">
+              <h3>Fumigadora Royal Condor 20L</h3>
+              <div class="meta">Marca: Royal Condor · Motor: Manual</div>
+              <div class="precio-line"><div class="precio-oferta"></div><div class="precio-original"></div></div>
+              <div class="add-wrap"><button class="add-to-cart">Añadir</button></div>
+            </div>
+          </article>
+
+          <article class="producto-card"
+            data-titulo="Generador Husqvarna G5500P"
+            data-marca="Husqvarna"
+            data-tipo="Generador"
+            data-motor="Gasolina"
+            data-cilindraje="5500"
+            data-precio-original="4780000"
+            data-precio-oferta="3825000"
+            data-disponible="true"
+            data-imgs="https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2,https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=alt1"
+            data-desc="Generador potente Husqvarna con regulación de voltaje y arranque fácil.">
+            <div class="producto-media"></div>
+            <div class="producto-body">
+              <h3>Generador Husqvarna G5500P</h3>
+              <div class="meta">Marca: Husqvarna · Motor: Gasolina · 5500W</div>
+              <div class="precio-line"><div class="precio-oferta"></div><div class="precio-original"></div></div>
+              <div class="add-wrap"><button class="add-to-cart">Añadir</button></div>
+            </div>
+          </article>
+
+          <article class="producto-card"
+            data-titulo="Electrobomba Barnes 2015HCE-5-3"
+            data-marca="Barnes"
+            data-tipo="Electrobomba"
+            data-motor="Eléctrico"
+            data-cilindraje="3000"
+            data-precio-original="4780000"
+            data-precio-oferta="3345600"
+            data-disponible="true"
+            data-imgs="https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c"
+            data-desc="Electrobomba de alto rendimiento para aplicaciones industriales.">
+            <div class="producto-media"></div>
+            <div class="producto-body">
+              <h3>Electrobomba Barnes 2015HCE-5-3</h3>
+              <div class="meta">Marca: Barnes · Motor: Eléctrico</div>
+              <div class="precio-line"><div class="precio-oferta"></div><div class="precio-original"></div></div>
+              <div class="add-wrap"><button class="add-to-cart">Añadir</button></div>
+            </div>
+          </article>
+
+          <article class="producto-card"
+            data-titulo="Cerca eléctrica El Cebú EC80Km"
+            data-marca="El Cebú"
+            data-tipo="Cerca"
+            data-motor="Eléctrico"
+            data-cilindraje="0"
+            data-precio-original="512200"
+            data-precio-oferta="512200"
+            data-disponible="true"
+            data-imgs="https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb"
+            data-desc="Sistema de cerca eléctrica para control de ganado, alcance 80 km.">
+            <div class="producto-media"></div>
+            <div class="producto-body">
+              <h3>Cerca eléctrica El Cebú EC80Km</h3>
+              <div class="meta">Marca: El Cebú · Motor: Eléctrico</div>
+              <div class="precio-line"><div class="precio-oferta"></div><div class="precio-original"></div></div>
+              <div class="add-wrap"><button class="add-to-cart">Añadir</button></div>
+            </div>
+          </article>
+
+        </div>
+
+        <div id="noResults" class="no-results" hidden>Sin resultados que coincidan con los filtros.</div>
+      </section>
+    </main>
+
+    <aside class="filtros" aria-label="Panel de filtros">
+      <h3>Filtrar resultados</h3>
+
+      <div class="filtro-group">
+        <label for="filterTipo">Tipo</label>
+        <select id="filterTipo" aria-label="Filtrar por tipo">
+          <option value="all">Todos</option>
+          <option value="Ahoyador">Ahoyador</option>
+          <option value="Motobomba">Motobomba</option>
+          <option value="Fumigadora">Fumigadora</option>
+          <option value="Generador">Generador</option>
+          <option value="Electrobomba">Electrobomba</option>
+          <option value="Cerca">Cerca</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="filterMarca">Marca</label>
+        <select id="filterMarca" aria-label="Filtrar por marca">
+          <option value="all">Todas</option>
+          <option>Beaver</option>
+          <option>Forte</option>
+          <option>Royal Condor</option>
+          <option>Husqvarna</option>
+          <option>Barnes</option>
+          <option>El Cebú</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="filterMotor">Motor</label>
+        <select id="filterMotor" aria-label="Filtrar por motor">
+          <option value="all">Todos</option>
+          <option>Gasolina</option>
+          <option>Eléctrico</option>
+          <option>manual</option>
+          <option>Manual</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="filterCilindraje">Cilindraje</label>
+        <select id="filterCilindraje" aria-label="Filtrar por cilindraje">
+          <option value="all">Todos</option>
+          <option value="0">0 (manual / eléctrico)</option>
+          <option value="1-50">≤ 50</option>
+          <option value="51-300">51 - 300</option>
+          <option value="301-2000">301 - 2000</option>
+          <option value="2001-999999">2001+</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="filterPrecio">Precio</label>
+        <select id="filterPrecio" aria-label="Filtrar por precio">
+          <option value="all">Cualquier precio</option>
+          <option value="0-500000">Hasta $500.000</option>
+          <option value="500001-1000000">$500.001 - $1.000.000</option>
+          <option value="1000001-4000000">$1.000.001 - $4.000.000</option>
+          <option value="4000001-99999999">Más de $4.000.000</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="filterDisp">Disponibilidad</label>
+        <select id="filterDisp" aria-label="Filtrar por disponibilidad">
+          <option value="all">Todos</option>
+          <option value="true">En stock</option>
+          <option value="false">Agotado</option>
+        </select>
+      </div>
+
+      <div class="filtro-group">
+        <label for="searchInput">Buscar</label>
+        <input id="searchInput" placeholder="Buscar por nombre..." aria-label="Buscar productos">
+      </div>
+
+      <div class="filtros-actions">
+        <button id="applyBtn" class="btn-aplicar">Aplicar</button>
+        <button id="clearBtn" class="btn-limpiar">Limpiar</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<!-- MODAL detalle con galería de miniaturas -->
+<div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="modal-card" role="document">
+    <button class="modal-close" aria-label="Cerrar modal" id="modalClose">✖</button>
+    <div class="modal-main">
+      <img id="modalMainImg" alt="Imagen producto">
+      <div class="thumbs" id="modalThumbs" aria-hidden="false"></div>
+    </div>
+    <div class="modal-info">
+      <h2 id="modalTitle"></h2>
+      <p id="modalMeta" class="meta"></p>
+      <p id="modalDesc"></p>
+      <div id="modalPrice" class="modal-price"></div>
+      <button id="modalAddBtn" class="modal-add">Agregar al carrito</button>
+    </div>
+  </div>
+</div>
+
+<!-- Footer accesible -->
+  <footer style="background-color: #111; color: #fff; padding: 40px 20px; font-size: 0.9rem;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto;">
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px; color: #fff;">UNICORN</h4>
+      <p>Maquinaria de calidad para el campo colombiano desde 1995.</p>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Productos</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="campo-jardin.html" style="color: #ccc; text-decoration: none;">Campo y Jardín</a></li>
+        <li><a href="manejo-agua.html" style="color: #ccc; text-decoration: none;">Manejo de Agua</a></li>
+        <li><a href="fumigacion.html" style="color: #ccc; text-decoration: none;">Fumigación</a></li>
+        <li><a href="manejo-energia.html" style="color: #ccc; text-decoration: none;">Manejo de Energía</a></li>
+        <li><a href="construccion.html" style="color: #ccc; text-decoration: none;">Construcción</a></li>
+        <li><a href="ferreteria.html" style="color: #ccc; text-decoration: none;">Ferretería</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Empresa</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sobre nosotros</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sucursales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Blog</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Soporte</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Contacto</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Garantía</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Manuales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Centro técnico</a></li>
+      </ul>
+    </div>
+
+    <!-- (enlaces de productos, empresa, soporte se mantienen igual) -->
+    
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Síguenos</h4>
+      <div style="margin: 10px; display: 20px flex; gap: 40px;">
+        <a href="https://www.facebook.com/agrounicorn.bogota" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" style="width: 24px;"></a>
+        <a href="https://www.instagram.com/agro_unicorn" target="_blank"><img src="https://encrypted-tbn3.gstatic.com/favicon-tbn?q=tbn:ANd9GcTI-5PGHmIaNROji4Au1BCHWlIYYuBV-S5o10vNQOpO8bKYe_6qoBk4-ZuXaoJFuMvh4TIqxnwOPvBj23km7XY2pAb98oE7qC3Akz3TL6SOymq5kX9Qzg" style="width: 24px;"></a>
+        <a href="https://www.tiktok.com/@agro_unicorn" target="_blank"><img src="https://encrypted-tbn3.gstatic.com/favicon-tbn?q=tbn:ANd9GcSEII2IIRImodcWZgz02fSWMJAoch4dG8QOVwhrtt_QvRi6NJLy8IjW1yAqU5ugCsqWjUeYJzz8ETnsSGPCArXzGmknKGS3PlAQHOi_1GEZqoL3vw" style="width: 24px;"></a>
+        <a href="https://www.youtube.com/@agro-unicorn" target="_blank"><img src="https://static.vecteezy.com/system/resources/previews/023/986/704/non_2x/youtube-logo-youtube-logo-transparent-youtube-icon-transparent-free-free-png.png" style="width: 24px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center; color: #aaa;">
+    © 2025 UNICORN. Todos los derechos reservados. | <a href="#" style="color: #aaa;">Política de privacidad</a>
+  </div>
+</footer>
+
+<script>
+/* ------------------ UTIL ------------------ */
+const $ = sel => document.querySelector(sel);
+const $$ = sel => Array.from(document.querySelectorAll(sel));
+function formatCOP(n){ if(isNaN(n)) return n; return n.toLocaleString('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0}); }
+
+/* ------------------ ELEMENTOS ------------------ */
+const grid = $('#productosGrid');
+const cards = () => $$('.producto-card');
+const resultadoCount = $('#resultadoCount');
+const noResults = $('#noResults');
+const spinnerCls = 'spinner-overlay';
+const ordenSel = $('#orden');
+
+const filterTipo = $('#filterTipo');
+const filterMarca = $('#filterMarca');
+const filterMotor = $('#filterMotor');
+const filterCilindraje = $('#filterCilindraje');
+const filterPrecio = $('#filterPrecio');
+const filterDisp = $('#filterDisp');
+const searchInput = $('#searchInput');
+const applyBtn = $('#applyBtn');
+const clearBtn = $('#clearBtn');
+
+/* MODAL */
+const modal = $('#modal');
+const modalMainImg = $('#modalMainImg');
+const modalThumbs = $('#modalThumbs');
+const modalTitle = $('#modalTitle');
+const modalDesc = $('#modalDesc');
+const modalMeta = $('#modalMeta');
+const modalPrice = $('#modalPrice');
+const modalAddBtn = $('#modalAddBtn');
+const modalClose = $('#modalClose');
+
+let currentProduct = null;
+
+/* ------------------ RENDER INICIAL TARJETAS (imagenes, badges, precios) ------------------ */
+function initCards(){
+  $$('.producto-card').forEach((card, idx) => {
+    card.dataset.index = idx; // preserve original order
+    const media = card.querySelector('.producto-media');
+    media.innerHTML = '';
+    const imgsAttr = (card.dataset.imgs || '').trim();
+    const imgs = imgsAttr ? imgsAttr.split(',').map(s=>s.trim()) : [];
+    const mainImg = document.createElement('img');
+    mainImg.src = imgs[0] || (card.dataset.img || '');
+    mainImg.alt = card.dataset.titulo || '';
+    mainImg.loading = 'lazy';
+    media.appendChild(mainImg);
+
+    // badge + price
+    let badge = media.querySelector('.producto-badge');
+    if(!badge){ badge = document.createElement('div'); badge.className = 'producto-badge'; media.appendChild(badge); }
+    const orig = Number(card.dataset.precioOriginal) || 0;
+    const of = Number(card.dataset.precioOferta) || orig;
+    const ofertaEl = card.querySelector('.precio-oferta');
+    const origEl = card.querySelector('.precio-original');
+    if(of < orig){
+      const disc = Math.round(((orig - of)/orig)*100);
+      badge.textContent = `-${disc}%`;
+      ofertaEl.textContent = formatCOP(of);
+      origEl.textContent = formatCOP(orig);
+    } else {
+      badge.textContent = '';
+      ofertaEl.textContent = formatCOP(of);
+      origEl.textContent = '';
+      badge.style.display = badge.textContent ? 'block' : 'none';
+    }
+
+    // disponibilidad visual
+    if(card.dataset.disponible === 'false'){ card.style.opacity = '.55' } else { card.style.opacity = '1' }
+
+    // click card to open modal (buttons handled separately)
+    card.addEventListener('click', (e)=>{
+      if(e.target.closest('.add-to-cart')) return;
+      openModalForCard(card);
+    });
+  });
+}
+
+/* ------------------ MODAL (galería con miniaturas) ------------------ */
+function openModalForCard(card){
+  currentProduct = {
+    titulo: card.dataset.titulo,
+    marca: card.dataset.marca,
+    tipo: card.dataset.tipo,
+    motor: card.dataset.motor,
+    cilindraje: card.dataset.cilindraje,
+    imgs: (card.dataset.imgs || '').split(',').map(s=>s.trim()).filter(Boolean),
+    desc: card.dataset.desc || '',
+    precioNum: Number(card.dataset.precioOferta || card.dataset.precioOriginal) || 0
+  };
+  // main image
+  const imgs = currentProduct.imgs.length ? currentProduct.imgs : [(card.dataset.img || '')];
+  modalMainImg.src = imgs[0] || '';
+  modalThumbs.innerHTML = '';
+  imgs.forEach((u,i)=>{
+    const t = document.createElement('img');
+    t.src = u;
+    t.alt = `${currentProduct.titulo} ${i+1}`;
+    t.loading = 'lazy';
+    if(i===0) t.classList.add('selected');
+    t.addEventListener('click', ()=> {
+      modalMainImg.src = u;
+      modalThumbs.querySelectorAll('img').forEach(x=>x.classList.remove('selected'));
+      t.classList.add('selected');
+    });
+    modalThumbs.appendChild(t);
+  });
+
+  modalTitle.textContent = currentProduct.titulo;
+  modalMeta.textContent = `Marca: ${currentProduct.marca} · Tipo: ${currentProduct.tipo} · Motor: ${currentProduct.motor} · Cilindraje: ${currentProduct.cilindraje}`;
+  modalDesc.textContent = currentProduct.desc;
+  modalPrice.textContent = formatCOP(currentProduct.precioNum);
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+}
+
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal() });
+function closeModal(){ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; currentProduct = null; }
+
+/* modal add to cart */
+modalAddBtn.addEventListener('click', ()=>{
+  if(!currentProduct) return;
+  addToCart({
+    titulo: currentProduct.titulo,
+    imagen: (currentProduct.imgs && currentProduct.imgs[0]) || '',
+    precio: formatCOP(currentProduct.precioNum)
+  });
+  closeModal();
+});
+
+/* ------------------ CARRITO (localStorage) ------------------ */
+function getCart(){ return JSON.parse(localStorage.getItem('carrito')) || [] }
+function saveCart(c){ localStorage.setItem('carrito', JSON.stringify(c)) }
+function actualizarContador(){
+  const c = getCart();
+  const total = c.reduce((s,i)=> s + (i.cantidad||0), 0);
+  const badge = $('#contadorCarrito');
+  badge.textContent = total;
+  badge.classList.toggle('mostrar', total>0);
+  badge.style.display = total>0 ? 'flex' : 'none';
+}
+function addToCart(prod){
+  if(!prod || !prod.titulo) return;
+  const carrito = getCart();
+  const existe = carrito.find(p=>p.titulo === prod.titulo);
+  if(existe) existe.cantidad++;
+  else carrito.push({...prod, cantidad:1});
+  saveCart(carrito);
+  actualizarContador();
+  toast(`${prod.titulo} agregado al carrito`);
+}
+$$('.producto-card .add-to-cart').forEach(btn=>{
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    const card = btn.closest('.producto-card');
+    const producto = {
+      titulo: card.dataset.titulo,
+      imagen: (card.dataset.imgs || '').split(',').map(s=>s.trim())[0] || card.dataset.img || '',
+      precio: formatCOP(Number(card.dataset.precioOferta || card.dataset.precioOriginal) || 0)
+    };
+    addToCart(producto);
+  });
+});
+
+/* ------------------ FILTRADO / ORDENACIÓN / URL SYNC / SPINNER ------------------ */
+
+function showSpinner(){
+  if(grid.querySelector('.spinner-overlay')) return;
+  const ov = document.createElement('div');
+  ov.className = 'spinner-overlay';
+  ov.innerHTML = '<div class="spinner" role="status" aria-hidden="true"></div>';
+  grid.appendChild(ov);
+}
+function hideSpinner(){ const o = grid.querySelector('.spinner-overlay'); if(o) o.remove(); }
+
+function parseCilindrajeRange(val){
+  if(val === 'all') return null;
+  if(val === '0') return {min:0,max:0};
+  if(val.includes('-')){ const [a,b]=val.split('-').map(Number); return {min:a,max:b} }
+  return null;
+}
+
+function applyFilters({pushURL=true} = {}){
+  showSpinner();
+  setTimeout(()=>{
+    // gather filter values
+    const tipo = filterTipo.value;
+    const marca = filterMarca.value;
+    const motor = filterMotor.value;
+    const cil = filterCilindraje.value;
+    const precioR = filterPrecio.value;
+    const disp = filterDisp.value;
+    const texto = (searchInput.value || '').trim().toLowerCase();
+    const orden = ordenSel.value;
+
+    // compute visible cards
+    let list = cards();
+    list.forEach(c=> c.style.display = 'none');
+
+    list = list.filter(c=>{
+      if(tipo !== 'all' && c.dataset.tipo.toLowerCase() !== tipo.toLowerCase()) return false;
+      if(marca !== 'all' && c.dataset.marca.toLowerCase() !== marca.toLowerCase()) return false;
+      if(motor !== 'all' && c.dataset.motor.toLowerCase() !== motor.toLowerCase()) return false;
+      if(disp !== 'all' && String(c.dataset.disponible) !== disp) return false;
+      if(texto && !(c.dataset.titulo || '').toLowerCase().includes(texto)) return false;
+      // cilindraje filter
+      const cilRange = parseCilindrajeRange(cil);
+      if(cilRange){
+        const val = Number(c.dataset.cilindraje || 0);
+        if(val < cilRange.min || val > cilRange.max) return false;
+      }
+      // precio filter
+      if(precioR !== 'all'){
+        const [pmin,pmax] = precioR.split('-').map(Number);
+        const p = Number(c.dataset.precioOferta || c.dataset.precioOriginal) || 0;
+        if(p < pmin || p > pmax) return false;
+      }
+      return true;
+    });
+
+    // sorting
+    if(orden === 'menor'){
+      list.sort((a,b)=> Number(a.dataset.precioOferta || a.dataset.precioOriginal) - Number(b.dataset.precioOferta || b.dataset.precioOriginal));
+    } else if(orden === 'mayor'){
+      list.sort((a,b)=> Number(b.dataset.precioOferta || b.dataset.precioOriginal) - Number(a.dataset.precioOferta || a.dataset.precioOriginal));
+    } else {
+      list.sort((a,b)=> Number(a.dataset.index || 0) - Number(b.dataset.index || 0));
+    }
+
+    // append in order and show
+    list.forEach(c => { c.style.display = 'flex'; grid.appendChild(c); });
+
+    resultadoCount.textContent = `Mostrando ${list.length} producto${list.length!==1?'s':''}`;
+    noResults.hidden = list.length > 0;
+
+    if(pushURL) syncURLWithFilters();
+    setTimeout(hideSpinner, 220);
+  }, 280);
+}
+
+function syncURLWithFilters(){
+  const params = new URLSearchParams();
+  if(filterTipo.value !== 'all') params.set('tipo', filterTipo.value);
+  if(filterMarca.value !== 'all') params.set('marca', filterMarca.value);
+  if(filterMotor.value !== 'all') params.set('motor', filterMotor.value);
+  if(filterCilindraje.value !== 'all') params.set('cil', filterCilindraje.value);
+  if(filterPrecio.value !== 'all') params.set('precio', filterPrecio.value);
+  if(filterDisp.value !== 'all') params.set('disp', filterDisp.value);
+  if(ordenSel.value !== 'relevancia') params.set('orden', ordenSel.value);
+  const text = (searchInput.value || '').trim();
+  if(text) params.set('q', text);
+  const qs = params.toString();
+  history.replaceState(null,'', qs ? `?${qs}` : location.pathname);
+}
+
+function restoreFiltersFromURL(){
+  const p = new URLSearchParams(location.search);
+  if(p.has('tipo')) filterTipo.value = p.get('tipo');
+  if(p.has('marca')) filterMarca.value = p.get('marca');
+  if(p.has('motor')) filterMotor.value = p.get('motor');
+  if(p.has('cil')) filterCilindraje.value = p.get('cil');
+  if(p.has('precio')) filterPrecio.value = p.get('precio');
+  if(p.has('disp')) filterDisp.value = p.get('disp');
+  if(p.has('orden')) ordenSel.value = p.get('orden');
+  if(p.has('q')) searchInput.value = p.get('q');
+}
+
+/* debounce helper */
+function debounce(fn,ms=220){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms) } }
+
+/* ------------------ TOAST ------------------ */
+function toast(msg){
+  const el = document.createElement('div');
+  Object.assign(el.style,{position:'fixed',right:'20px',bottom:'24px',background:'#111',color:'#fff',padding:'10px 14px',borderRadius:'8px',zIndex:9999,opacity:0,transition:'opacity .18s'});
+  el.textContent = msg;
+  document.body.appendChild(el);
+  requestAnimationFrame(()=> el.style.opacity = '1');
+  setTimeout(()=>{ el.style.opacity = '0'; setTimeout(()=>el.remove(),220) },1600);
+}
+
+/* ------------------ INICIALIZACION ------------------ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  initCards();
+  // restore filters from URL (if any)
+  restoreFiltersFromURL();
+  // wire events
+  applyBtn.addEventListener('click', ()=>applyFilters({pushURL:true}));
+  clearBtn.addEventListener('click', ()=>{
+    filterTipo.value='all'; filterMarca.value='all'; filterMotor.value='all'; filterCilindraje.value='all';
+    filterPrecio.value='all'; filterDisp.value='all'; searchInput.value=''; ordenSel.value='relevancia';
+    applyFilters({pushURL:true});
+  });
+
+  searchInput.addEventListener('input', debounce(()=>applyFilters({pushURL:true}),200));
+  filterTipo.addEventListener('change', ()=>applyFilters({pushURL:true}));
+  filterMarca.addEventListener('change', ()=>applyFilters({pushURL:true}));
+  filterMotor.addEventListener('change', ()=>applyFilters({pushURL:true}));
+  filterCilindraje.addEventListener('change', ()=>applyFilters({pushURL:true}));
+  filterPrecio.addEventListener('change', ()=>applyFilters({pushURL:true}));
+  filterDisp.addEventListener('change', ()=>applyFilters({pushURL:true}));
+  ordenSel.addEventListener('change', ()=>applyFilters({pushURL:true}));
+
+  // initial apply
+  applyFilters({pushURL:false});
+  actualizarContador();
+
+  // keyboard: escape closes modal
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+});
+
+/* ------------------ MISC: toggle dark minimal ------------------ */
+function toggleDark(){ document.documentElement.classList.toggle('dark-mode'); }
+
+/* ------------------ EXPORT small helper for testing if needed ------------------ */
+window.__UNICORN = { applyFilters, addToCart, initCards };
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- SEO -->
+  <meta name="description" content="UNICORN: Maquinaria agrícola y herramientas para campo, jardín, construcción y energía. Calidad, garantía y envíos en Colombia.">  
+  <meta name="keywords" content="maquinaria agrícola, motosierras, fumigadoras, motobombas, generadores, campo, jardín, agro, UNICORN">
+  <meta name="author" content="UNICORN">
+
+  <title>Agro Unicorn | Maquinaria para el campo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" loading="lazy"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <!-- AOS CSS (animaciones) -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<!-- Fuentes y AOS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg: #f6f7f8;
+      --white: #ffffff;
+      --muted: #6b6b6b;
+      --accent: #2e7d32;      /* verde agrícola */
+      --accent-2: #f57c00;    /* naranja */
+      --card-shadow: 0 8px 24px rgba(17,17,17,0.06);
+      --radius: 14px;
+      --max-width: 1200px;
+    }
+
+/* ===== Dark Mode Global ===== */
+body.dark-mode {
+  background: #121212;
+  color: #f5f5f5;
+}
+
+/* Header y navegación */
+body.dark-mode .hero {
+  position: relative;
+  background: inherit; /* mantiene la imagen original */
+}
+
+body.dark-mode .hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5); /* oscurece la imagen sin taparla */
+}
+body.dark-mode .hero * {
+  position: relative; /* asegura que el texto quede sobre el overlay */
+}
+
+/* Textos globales */
+body.dark-mode,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode p,
+body.dark-mode span,
+body.dark-mode a {
+  color: #f5f5f5 !important;
+}
+
+/* Secciones principales */
+body.dark-mode .hero,
+body.dark-mode .categorias,
+body.dark-mode .reseñas,
+body.dark-mode .beneficios,
+body.dark-mode .razones,
+body.dark-mode .testimonios,
+body.dark-mode .mapa {
+  background: #1e1e1e;
+}
+
+/* Tarjetas y elementos */
+body.dark-mode .producto-card,
+body.dark-mode .reseña-card,
+body.dark-mode .beneficio,
+body.dark-mode .razon-card,
+body.dark-mode .categoria-card {
+  background: #2a2a2a;
+  color: #f5f5f5;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+/* Modal */
+body.dark-mode .modal-content {
+  background: #2a2a2a;
+  color: #f5f5f5;
+}
+
+/* Footer */
+body.dark-mode .footer {
+  background: #0a0a0a;
+  color: #ddd;
+}
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    } 
+
+   header{
+      background: #fff;
+      padding: 18px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      position: sticky;
+      top:0;
+      z-index:1500;
+    }
+    .logo{display:flex;align-items:center;cursor:pointer}
+    .logo img{width:44px;height:44px;border-radius:50%;margin-right:12px}
+    .logo span{font-weight:700;color:#0e008b;letter-spacing:0.2px}
+
+    nav a {
+      margin-left: 18px;
+      color: #111;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    :root {
+  --naranja: #ff6600;
+}  
+
+/* ====== BOTÓN DARK MODE ====== */
+    .dark-toggle {
+      background: none;
+      border: 2px solid var(--text);
+      border-radius: 50%;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 15px;
+    }
+
+/* ====== TOAST GLOBAL ====== */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInOut 3s ease forwards;
+      z-index: 3000;
+    }    
+
+/* ====== Estilo mejorado para el contador del carrito ====== */
+#carritoLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#carritoLink:hover {
+  transform: scale(1.04);
+}
+
+/* Icono del carrito */
+#carritoLink .icono-carrito {
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+/* Contador (burbuja) */
+#contadorCarrito {
+  position: absolute;
+  top: -6px;
+  right: -16px;
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transform-origin: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+}
+
+/* Cuando aparece */
+#contadorCarrito.mostrar {
+  display: flex;
+  opacity: 1;
+}
+
+/* Animación de "pop" */
+@keyframes burbujaPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Animación de vibración del ícono */
+@keyframes vibrarCarrito {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: url('https://bacanika.com/articulo/images/4.0_BACANIKA/CULTURA/JINETES/Cholo.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-overlay {
+      background: linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.2));
+      color: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    .hero-overlay h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero-overlay p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: white;
+    }
+
+    .hero-overlay button {
+      background-color: white;
+      color: #000000;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-overlay button:hover {
+      background-color: whitesmoke;
+      transform: scale(1.05);
+    }
+
+/* ====== Sección de Categorías Destacadas (rediseño con imágenes) ====== */
+.categorias {
+  text-align: center;
+  padding: 60px 20px;
+  background: #f9f9f9;
+}
+
+.categorias-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  color: #1a1a1a;
+}
+
+.categorias-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* siempre 3 por fila */
+  gap: 30px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .categorias-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 por fila en tablet/móvil */
+  }
+}
+
+@media (max-width: 480px) {
+  .categorias-grid {
+    grid-template-columns: 1fr; /* 1 por fila en móviles pequeños */
+  }
+}
+
+.categoria-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.categoria-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.categoria-img {
+  width: 100%;
+  height: 150px;
+  overflow: hidden;
+}
+
+.categoria-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.categoria-card h3 {
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  background: #fff;
+  width: 100%;
+  text-align: center;
+}
+
+.categoria-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+/* ====== Sección de Marcas Aliadas (Carrusel Automático) ====== */
+.marcas {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.marcas-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1a1a1a;
+}
+
+.marcas-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marcas-track {
+  display: flex;
+  gap: 60px;
+  width: calc(200%); /* ancho doble para duplicados */
+  animation: scrollMarcas 20s linear infinite;
+}
+
+.marca-card {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marca-card img {
+  max-width: 120px;
+  height: auto;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.marca-card img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Animación automática */
+@keyframes scrollMarcas {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+   .carousel-gama {
+  padding: 60px 40px;
+  background-color: #ffffff;
+}
+
+.carousel-gama h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-inner {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.product-card {
+  min-width: 220px;
+  flex-shrink: 0;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  border: 1px solid #eee;
+}
+
+/* ====== Etiqueta de Oferta ====== */
+.producto-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.producto-oferta {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #e63946;
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  animation: pulseOferta 1.5s infinite;
+}
+
+/* animación ligera para llamar atención */
+@keyframes pulseOferta {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* ====== Precios ====== */
+.producto-precio {
+  margin: 10px 0;
+}
+
+.precio-original {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 8px;
+  font-size: 0.95rem;
+}
+
+.precio-oferta {
+  color: #e63946;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+}
+
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.product-card h3 {
+  margin: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+.carousel-btn:hover {
+  background-color: #f2f2f2;
+}
+
+.carousel-btn.left {
+  left: 10px;
+}
+
+.carousel-btn.right {
+  right: 10px;
+}
+
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: crimson;
+  color: white;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 12px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* ===== Modal estilo Husqvarna ===== */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.75);
+  z-index: 2000;
+  backdrop-filter: blur(6px);
+}
+
+.modal-content {
+  background: linear-gradient(135deg, #ffffff, #f8f9fa);
+  padding: 40px 30px;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  animation: slideUp 0.4s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.modal-content img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.modal-content h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0e008b;
+  margin-bottom: 12px;
+}
+
+.modal-content p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 25px;
+}
+
+.modal-content button {
+  padding: 14px 30px;
+  background: #f57c00;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.modal-content button:hover {
+  background: #d86400;
+  transform: translateY(-2px);
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+  color: #f57c00;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Responsive: Móvil como card deslizable ===== */
+@media (max-width: 768px) {
+  .modal {
+    align-items: flex-end; /* modal abajo */
+    padding: 0;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    animation: slideUp 0.35s ease;
+  }
+
+  .modal-img img {
+    max-height: 200px;
+    object-fit: cover;
+  }
+
+  .modal-info {
+    padding: 18px;
+  }
+
+  .modal-info h2 {
+    font-size: 1.4rem;
+  }
+
+  .modal-info p {
+    font-size: 0.95rem;
+  }
+}
+
+/* Animación slide-up (móvil) */
+@keyframes slideUp {
+  from {transform: translateY(100%);}
+  to {transform: translateY(0);}
+}
+
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .search-bar input {
+      width: 60%;
+      padding: 15px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    .search-wrapper {
+  position: relative;
+  width: 60%;
+  margin: 40px auto;
+}
+
+.search-wrapper input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+  font-size: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* ====== Buscador con highlight ====== */
+    .highlight {
+      background: yellow;
+      font-weight: bold;
+    } 
+
+.sugerencias-lista {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 250px;
+  overflow-y: auto;
+  display: none;
+  margin-top: 4px;
+  list-style: none;
+  z-index: 1000;
+}
+
+.sugerencias-lista li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.sugerencias-lista li:hover,
+.sugerencias-lista li.active {
+  background-color: #f0f8ff;
+  font-weight: 500;
+}
+
+.sugerencia-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s ease;
+}
+
+.sugerencia-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sugerencia-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.sugerencia-item .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sugerencia-item .info strong {
+  font-size: 1rem;
+  color: #222;
+}
+
+.sugerencia-item .info span {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* ===== Reseñas mejoradas ===== */
+.reseñas {
+  padding: 70px 20px;
+  background: #f9f9f9;
+  text-align: center;
+}
+
+.reseñas h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #0e008b;
+}
+
+.reseñas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.reseña-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 22px rgba(0,0,0,0.08);
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.reseña-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.reseña-foto {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.reseña-info h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: #333;
+}
+
+.reseña-estrellas {
+  color: #f57c00;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.reseña-info p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
+
+/* ===== Sección ¿Por qué elegir UNICORN? ===== */
+.porque-elegirnos {
+  background-color: #f8f9fa;
+  padding: 60px 40px;
+}
+
+.porque-elegirnos h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.porque-elegirnos .razones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.porque-elegirnos .razon {
+  flex: 1 1 250px;
+  max-width: 320px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.porque-elegirnos .razon:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.porque-elegirnos .razon h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.porque-elegirnos .razon p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* ===== Ubicación ===== */
+.ubicacion {
+  padding: 60px 20px;
+  text-align: center;
+  background: #fff;
+}
+
+.ubicacion h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.ubicacion p {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  color: #444;
+}
+
+    .testimonios, .beneficios, .newsletter, .ubicacion {
+      padding: 40px;
+      background-color: #ffffff;
+    }
+
+    .testimonios .cliente {
+      margin-bottom: 20px;
+      border-left: 4px solid #424949;
+      padding-left: 20px;
+    }
+
+    .beneficios {
+      display: flex;
+      justify-content: space-around;
+      text-align: center;
+    }
+
+    .beneficio {
+      max-width: 150px;
+    }
+
+    .newsletter input {
+      padding: 12px;
+      width: 60%;
+      margin-right: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .newsletter button {
+      padding: 12px 20px;
+      border: none;
+      background-color: #0e008b;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    footer {
+      background-color: #000;
+      color: #aaa;
+      padding: 40px;
+      text-align: center;
+    }
+
+/* ===== Chat ===== */
+
+#chat-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff6600;
+  color: white;
+  padding: 14px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 999;
+}
+
+#chat-container {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 320px;
+  height: 420px;
+  background: #fff;
+  border-radius: 15px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  overflow: hidden;
+  z-index: 999;
+}
+
+#chat-header {
+  background: #ff6600;
+  color: white;
+  padding: 12px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+}
+
+#chat-messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+.msg {
+  margin: 8px 0;
+  padding: 8px 12px;
+  border-radius: 10px;
+  max-width: 75%;
+}
+
+.user {
+  background: #ff6600;
+  color: white;
+  margin-left: auto;
+}
+
+.bot {
+  background: #f1f1f1;
+}
+
+#chat-input-area {
+  border-top: 1px solid #ddd;
+}
+
+#chat-input {
+  width: 100%;
+  border: none;
+  padding: 12px;
+  outline: none;
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="location.href='UNICORN.html'">
+      <img src="https://agro.unicorn.com.co/web/image/16724/20200424%20auls_planobordeazul_v1.png" alt="Logo UNICORN" />
+      <span>AGRO UNICORN</span>
+    </div>
+    <nav aria-label="Navegación principal">
+      <a href="productos.html">Productos</a>
+      <a href="piezas-accesorios.html">Piezas y Accesorios</a>
+      <a href="carrito.html" id="carritoLink" aria-label="Ver carrito">
+  <span class="icono-carrito">🛒</span>
+  <span style="font-weight:700;">Carrito</span>
+  <span id="contadorCarrito" aria-live="polite">0</span>
+</a>
+      <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+    </nav>
+  </header>
+
+<!-- Modal de producto -->
+<div id="modalProducto" class="modal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="cerrarModal()">✖</button>
+    <img id="modalImagen" src="" alt="Imagen producto" />
+    <h2 id="modalTitulo"></h2>
+    <p id="modalDescripcion"></p>
+    <button id="modalAddBtn" class="add-to-cart">Agregar al carrito</button>
+  </div>
+</div>
+
+  <section class="hero">
+  <div class="hero-overlay">
+    <h1 data-aos="fade-down">Maquinaria de alta calidad para el campo</h1>
+    <p data-aos="fade-up" data-aos-delay="200">
+      Potencia, eficiencia y durabilidad para todos tus trabajos agrícolas.
+    </p>
+    <button 
+      onclick="window.location.href='productos.html'" 
+      data-aos="zoom-in" 
+      data-aos-delay="400">
+      Explorar productos
+    </button>
+  </div>
+</section>
+
+<!-- ===================== INICIO CATEGORÍAS DESTACADAS ===================== -->
+<section class="categorias" data-aos="fade-up">
+  <h2 class="categorias-titulo">Explora por Categoría</h2>
+  <div class="categorias-grid">
+    
+    <a href="manejo-agua.html" class="categoria-card">
+      <div class="categoria-img">
+        <img src="https://agro.unicorn.com.co/web/image/23205/motobomba.jpg" alt="Manejo de agua">
+      </div>
+      <h3>Manejo de agua</h3>
+    </a>
+    
+    <a href="manejo-energia.html" class="categoria-card">
+      <div class="categoria-img">
+        <img src="https://agro.unicorn.com.co/web/image/23209/Generador%20Powermaster%204500.jpg" alt="Manejo de eneriga">
+      </div>
+      <h3>Manejo de energía</h3>
+    </a>
+    
+    <a href="fumigacion.html" class="categoria-card">
+      <div class="categoria-img">
+        <img src="https://agro.unicorn.com.co/web/image/23207/Fumigadora%20Mitsubishi%20TU26.jpg" alt="Fumigación">
+      </div>
+      <h3>Fumigación</h3>
+    </a>
+    
+    <a href="construccion.html" class="categoria-card">
+      <div class="categoria-img">
+        <img src="https://agro.unicorn.com.co/web/image/23211/Apisonador%20Forte%20Varios.jpg" alt="Construcción">
+      </div>
+      <h3>Construcción</h3>
+    </a>
+    
+    <a href="campo-jardin.html" class="categoria-card">
+      <div class="categoria-img">
+        <img src="https://agro.unicorn.com.co/web/image/23203/1391921_610433935680148_1338398718_n.jpg" alt="Campo y jardin">
+      </div>
+      <h3>Campo y jardín</h3>
+    </a>
+
+    <a href="ferreteria.html" class="categoria-card">
+      <div class="categoria-img">
+        <img src="https://agro.unicorn.com.co/web/image/23213/Herramienta%20Bellota.jpg" alt="Ferretería">
+      </div>
+      <h3>Ferretería</h3>
+    </a>
+    
+  </div>
+</section>
+<!-- ===================== FIN CATEGORÍAS DESTACADAS ===================== -->
+
+<!-- ===================== INICIO MARCAS ALIADAS ===================== -->
+<section class="marcas" data-aos="fade-up">
+  <h2 class="marcas-titulo">Nuestras Marcas Aliadas</h2>
+  <div class="marcas-slider">
+    <div class="marcas-track">
+      <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/22/2/husqvarna-logo-png_seeklogo-227182.png" alt="Husqvarna"></div>
+    <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Stihl_Logo.svg/2560px-Stihl_Logo.svg.png" alt="Stihl"></div>
+    <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/03/Shindaiwa-Logo.png" alt="Shindaiwa"></div>
+    <div class="marca-card"><img src="https://bombasbeyond.com/wp-content/uploads/2023/06/logo-barnes.webp" alt="Barnes"></div>
+    <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/30/2/honda-power-equipment-logo-png_seeklogo-303966.png" alt="Honda"></div>
+    <div class="marca-card"><img src="https://seacoastpower.com/wp-content/uploads/2024/03/Echo.png" alt="Echo"></div>
+    <div class="marca-card"><img src="https://cdn241.s3.eu-west-2.amazonaws.com/PedrolloDistribution/Images/Why/Our-Partners/Main-Page/Pedrollo-Logo-Page.webp" alt="Pedrollo"></div>
+    <div class="marca-card"><img src="https://igihm.com/imagenes/logo.png" alt="Ignacio Gómez IHM"></div>
+    <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Subaru_logo_%28transparent%29.svg/1200px-Subaru_logo_%28transparent%29.svg.png" alt="Subaru"></div>
+    <div class="marca-card"><img src="https://purepng.com/public/uploads/large/purepng.com-mitsubishi-logomitsubishimitsubishi-groupmitsubishi-automobilesmitsubishi-logo-1701527515646xfkuq.png" alt="Mitsubishi"></div>
+    <div class="marca-card"><img src="https://www.cdcsoftware.com/wp-content/uploads/2019/02/Siemens-Logo.png" alt="Siemens"></div>
+    <div class="marca-card"><img src="https://download.logo.wine/logo/WEG_Industries/WEG_Industries-Logo.wine.png" alt="WEG"></div>
+    <div class="marca-card"><img src="https://cdn.freebiesupply.com/logos/thumbs/2x/yamaha-12-logo.png" alt="Yamaha"></div>
+    <div class="marca-card"><img src="https://logodownload.org/wp-content/uploads/2022/09/kaercher-logo-0.png" alt="Kärcher"></div>
+    <div class="marca-card"><img src="https://www.varriale.com/en/wp-content/uploads/2021/02/lombardini-01.png" alt="Kohler Lombardin"></div>
+    <div class="marca-card"><img src="https://www.coacosta.com/wp-content/uploads/2017/07/Royal-condor.png" alt="Royal Condor"></div>
+    <div class="marca-card"><img src="https://d7rh5s3nxmpy4.cloudfront.net/CMP4506/files/LOGO_BELLOTA_NEGRO.png" alt="Bellota"></div>
+    <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/01/Tramontina-Logo.png" alt="Tramontina"></div>
+    <div class="marca-card"><img src="https://www.cercaselcebu.com.co/wp-content/uploads/2025/08/logocercas.png" alt="El Cebu"></div>
+    <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/DeWalt_Logo.svg/1024px-DeWalt_Logo.svg.png"     alt="DeWalt"></div>
+
+      <!-- duplicados para efecto loop infinito -->
+      <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/22/2/husqvarna-logo-png_seeklogo-227182.png" alt="Husqvarna"></div>
+      <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Stihl_Logo.svg/2560px-Stihl_Logo.svg.png" alt="Stihl"></div>
+      <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/03/Shindaiwa-Logo.png" alt="Shindaiwa"></div>
+      <div class="marca-card"><img src="https://bombasbeyond.com/wp-content/uploads/2023/06/logo-barnes.webp" alt="Barnes"></div>
+      <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/30/2/honda-power-equipment-logo-png_seeklogo-303966.png" alt="Honda"></div>
+      <div class="marca-card"><img src="https://seacoastpower.com/wp-content/uploads/2024/03/Echo.png" alt="Echo"></div>
+      <div class="marca-card"><img src="https://cdn241.s3.eu-west-2.amazonaws.com/PedrolloDistribution/Images/Why/Our-Partners/Main-Page/Pedrollo-Logo-Page.webp" alt="Pedrollo"></div>
+      <div class="marca-card"><img src="https://igihm.com/imagenes/logo.png" alt="Ignacio Gómez IHM"></div>
+      <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Subaru_logo_%28transparent%29.svg/1200px-Subaru_logo_%28transparent%29.svg.png" alt="Subaru"></div>
+      <div class="marca-card"><img src="https://purepng.com/public/uploads/large/purepng.com-mitsubishi-logomitsubishimitsubishi-groupmitsubishi-automobilesmitsubishi-logo-1701527515646xfkuq.png" alt="Mitsubishi"></div>
+      <div class="marca-card"><img src="https://www.cdcsoftware.com/wp-content/uploads/2019/02/Siemens-Logo.png" alt="Siemens"></div>
+      <div class="marca-card"><img src="https://download.logo.wine/logo/WEG_Industries/WEG_Industries-Logo.wine.png" alt="WEG"></div>
+      <div class="marca-card"><img src="https://cdn.freebiesupply.com/logos/thumbs/2x/yamaha-12-logo.png" alt="Yamaha"></div>
+      <div class="marca-card"><img src="https://logodownload.org/wp-content/uploads/2022/09/kaercher-logo-0.png" alt="Kärcher"></div>
+      <div class="marca-card"><img src="https://www.varriale.com/en/wp-content/uploads/2021/02/lombardini-01.png" alt="Kohler Lombardin"></div>
+      <div class="marca-card"><img src="https://www.coacosta.com/wp-content/uploads/2017/07/Royal-condor.png" alt="Royal Condor"></div>
+      <div class="marca-card"><img src="https://d7rh5s3nxmpy4.cloudfront.net/CMP4506/files/LOGO_BELLOTA_NEGRO.png" alt="Bellota"></div>
+      <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/01/Tramontina-Logo.png" alt="Tramontina"></div>
+      <div class="marca-card"><img src="https://www.cercaselcebu.com.co/wp-content/uploads/2025/08/logocercas.png" alt="El Cebu"></div>
+      <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/DeWalt_Logo.svg/1024px-DeWalt_Logo.svg.png" alt="DeWalt"></div>
+    </div>
+  </div>
+</section>
+<!-- ===================== FIN MARCAS ALIADAS ===================== -->
+
+<!-- Nueva sección carrusel "Descubre nuestra gama" -->
+<section class="carousel-gama">
+  <h2>Productos destacados</h2>
+  <div class="carousel-wrapper" id="carouselArea">
+    <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#10094;</button>
+    <div id="productCarousel" class="carousel-inner">
+
+      <div class="product-card" onclick="abrirModal('Ahoyador Beaver AG52 (2T-51.7cc-1.5KW-Barreno 20cm)', 'https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f', '$ 1,020,000.00')">
+        <div class="producto-img">
+          <span class="producto-oferta">Nuevo</span>
+          <img src="https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f" alt="Campo y Jardín" loading="lazy">
+        </div>
+        <h3>Ahoyador Beaver AG52</h3>
+        <p class="producto-precio">
+          <span class="precio-oferta">$1,020,000</span>
+        </p>
+      </div>
+
+      <div class="product-card" 
+         data-precio-original="930000" 
+         data-precio-oferta="816000"
+         onclick="abrirModal('Motobomba autocebante aluminio gasolina Forte DJ50', 'https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1', '$816,000.00')">
+       <div class="producto-img">
+        <span class="producto-oferta"></span> <!-- etiqueta calculada por JS -->
+        <img src="https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1" alt="Manejo de Agua" loading="lazy">
+       </div>
+       <h3>Motobomba autocebante aluminio</h3>
+       <p class="producto-precio">
+          <span class="precio-original">$930,000</span>
+           <span class="precio-oferta">$816,000</span>
+         </p>
+       </div>
+
+      <div class="product-card" onclick="abrirModal('Fumigadora manual Royal Condor Aliada 20 L', 'https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d', '$ 336,600.00')">
+        <div class="producto-img">
+          <span class="producto-oferta">Popular</span>
+          <img src="https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d" alt="Fumigadora manual" loading="lazy">
+        </div>
+        <h3>Fumigadora manual</h3>
+        <p class="producto-precio">
+          <span class="precio-oferta">$336,600</span>
+        </p>
+      </div>
+
+      <div class="product-card" 
+          data-precio-original="4780000" 
+          data-precio-oferta="3825000"
+          onclick="abrirModal('Generador gasolina Husqvarna G5500P (Pmax 5.2KVA-1Φ-110/220Vac-AM/E)', 'https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2', '$ 3,825,000.00')">
+       <div class="producto-img">
+        <span class="producto-oferta"></span>
+        <img src="https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2" alt="Generador gasolina Husqvarna G5500P" loading="lazy">
+       </div>
+       <h3>Generador gasolina Husqvarna G5500P</h3>
+       <p class="producto-precio">
+          <span class="precio-original">$4,780,000</span>
+          <span class="precio-oferta">$3,825,000</span>
+        </p>
+      </div>
+
+      <div class="product-card" 
+           data-precio-original="4780000"
+           data-precio-oferta="3345600"
+           onclick="abrirModal('Electrobomba alta presión Barnes 2015HCE-5-3 (2x2-5HP-3Φ-220/440V-Hmax 42m-Qmax 150gpm)', 'https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c', '$ 3,345,600.00')">
+        <div class="producto-img">
+          <span class="producto-oferta">-30%</span>
+          <img src="https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c" alt="Electrobomba alta presión Barnes" loading="lazy">
+        </div>
+        <h3>Electrobomba alta presión Barnes</h3>
+        <p class="producto-precio">
+          <span class="precio-original">$4,780,000</span>
+          <span class="precio-oferta">$3,345,600</span>
+        </p>
+      </div>
+
+      <div class="product-card" onclick="abrirModal('Cerca eléctrica El Cebú EC80Km', 'https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb', '$ 512,200.00')">
+        <div class="producto-img">
+          <span class="producto-oferta">Top Ventas</span>
+          <img src="https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb" alt="Cerca eléctrica" loading="lazy">
+        </div>
+        <h3>Cerca eléctrica</h3>
+        <p class="producto-precio">
+          <span class="precio-oferta">$512,200</span>
+        </p>
+      </div>
+
+    </div>
+    <button class="carousel-btn right" onclick="scrollCarousel(1)">&#10095;</button>
+  </div>
+</section>
+
+  <!-- Buscador -->
+  <div class="search-wrapper">
+    <input id="buscador" type="text" placeholder="¿Qué estás buscando hoy?" autocomplete="off" />
+    <ul id="sugerencias" class="sugerencias-lista"></ul>
+  </div>
+
+<section class="reseñas">
+  <h2>Lo que opinan nuestros clientes</h2>
+  <div class="reseñas-grid">
+    
+    <div class="reseña-card">
+      <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Cliente satisfecho" class="reseña-foto">
+      <div class="reseña-info">
+        <h3>Juan Pérez</h3>
+        <div class="reseña-estrellas">⭐⭐⭐⭐⭐</div>
+        <p>"La motobomba que compré funciona perfecto, me entregaron rápido y con garantía. ¡Muy recomendado!"</p>
+      </div>
+    </div>
+    
+    <div class="reseña-card">
+      <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Cliente satisfecha" class="reseña-foto">
+      <div class="reseña-info">
+        <h3>María López</h3>
+        <div class="reseña-estrellas">⭐⭐⭐⭐⭐</div>
+        <p>"Excelente atención, me ayudaron a elegir la fumigadora correcta y ahora mi cultivo va mucho mejor."</p>
+      </div>
+    </div>
+    
+    <div class="reseña-card">
+      <img src="https://randomuser.me/api/portraits/men/64.jpg" alt="Cliente satisfecho" class="reseña-foto">
+      <div class="reseña-info">
+        <h3>Carlos Gómez</h3>
+        <div class="reseña-estrellas">⭐⭐⭐⭐</div>
+        <p>"Muy buenos precios y equipos de calidad. El envío fue un poco demorado, pero todo lo demás excelente."</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <!-- Beneficios (modificado: agregado data-aos y accesibilidad) -->
+<section class="beneficios">
+  <div class="beneficio" data-aos="fade-up" data-aos-delay="100">
+    <h3 aria-hidden="true">🛠️</h3>
+    <p>Garantía incluida</p>
+  </div>
+  <div class="beneficio" data-aos="fade-up" data-aos-delay="200">
+    <h3 aria-hidden="true">🚚</h3>
+    <p>Envíos rápidos</p>
+  </div>
+  <div class="beneficio" data-aos="fade-up" data-aos-delay="300">
+    <h3 aria-hidden="true">💬</h3>
+    <p>Soporte técnico</p>
+  </div>
+  <div class="beneficio" data-aos="fade-up" data-aos-delay="400">
+    <h3 aria-hidden="true">💳</h3>
+    <p>Pagos seguros</p>
+  </div>
+</section>
+  
+  <!-- Porque elegirnos -->
+  <section class="porque-elegirnos">
+  <h2 data-aos="fade-up">¿Por qué elegir UNICORN?</h2>
+  <div class="razones">
+    <div class="razon" data-aos="zoom-in" data-aos-delay="100">
+      <h3 aria-hidden="true">🔧 Especialistas en el agro</h3>
+      <p>Más de 25 años de experiencia en maquinaria para campo y jardín.</p>
+    </div>
+    <div class="razon" data-aos="zoom-in" data-aos-delay="200">
+      <h3 aria-hidden="true">🛡️ Garantía y soporte</h3>
+      <p>Respaldo técnico, repuestos y atención en todo el país.</p>
+    </div>
+    <div class="razon" data-aos="zoom-in" data-aos-delay="300">
+      <h3 aria-hidden="true">🌱 Compromiso con el campo</h3>
+      <p>Promovemos soluciones sostenibles y duraderas para agricultores.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Ubicación -->
+<section class="ubicacion">
+  <h2>Ubícanos</h2>
+  <p>Visita nuestra sucursal principal o contáctanos en todo el país.</p>
+  <div style="max-width: 1000px; margin: auto;">
+    <iframe src="https://www.google.com/maps/d/embed?mid=12gK3EpCM14jX0ypiJFF1DSGjurkOisg&ehbc=2E312F" width="100%" height="450" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+</section>
+
+<!-- BOTÓN -->
+<div id="chat-toggle">💬</div>
+
+<!-- CHAT -->
+<div id="chat-container">
+  <div id="chat-header">
+    Soporte UNICORN 🦄
+    <span id="chat-close">✖</span>
+  </div>
+
+  <div id="chat-messages"></div>
+
+  <div id="chat-input-area">
+    <input type="text" id="chat-input" placeholder="Escribe tu mensaje...">
+  </div>
+</div>
+
+
+<!-- Footer accesible -->
+  <footer style="background-color: #111; color: #fff; padding: 40px 20px; font-size: 0.9rem;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto;">
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px; color: #fff;">UNICORN</h4>
+      <p>Maquinaria de calidad para el campo colombiano desde 1995.</p>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Productos</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="campo-jardin.html" style="color: #ccc; text-decoration: none;">Campo y Jardín</a></li>
+        <li><a href="manejo-agua.html" style="color: #ccc; text-decoration: none;">Manejo de Agua</a></li>
+        <li><a href="fumigacion.html" style="color: #ccc; text-decoration: none;">Fumigación</a></li>
+        <li><a href="manejo-energia.html" style="color: #ccc; text-decoration: none;">Manejo de Energía</a></li>
+        <li><a href="construccion.html" style="color: #ccc; text-decoration: none;">Construcción</a></li>
+        <li><a href="ferreteria.html" style="color: #ccc; text-decoration: none;">Ferretería</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Empresa</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sobre nosotros</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sucursales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Blog</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Soporte</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Contacto</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Garantía</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Manuales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Centro técnico</a></li>
+      </ul>
+    </div>
+
+    <!-- (enlaces de productos, empresa, soporte se mantienen igual) -->
+    
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Síguenos</h4>
+      <div style="margin: 10px; display: 20px flex; gap: 40px;">
+        <a href="https://www.facebook.com/agrounicorn.bogota" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" style="width: 24px;"></a>
+        <a href="https://www.instagram.com/agro_unicorn" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" style="width: 24px;"></a>
+        <a href="https://www.tiktok.com/@agro_unicorn" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" style="width: 24px;"></a>
+        <a href="https://www.youtube.com/@agro-unicorn" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" style="width: 24px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center; color: #aaa;">
+    © 2025 UNICORN. Todos los derechos reservados. | <a href="#" style="color: #aaa;">Política de privacidad</a>
+  </div>
+</footer>
+
+  <script>
+
+// ====== DARK MODE ======
+    function toggleDark() {
+      document.body.classList.toggle("dark-mode");
+      showToast(document.body.classList.contains("dark-mode") ? "🌙 Modo oscuro activado" : "☀️ Modo claro activado");
+    }
+
+// ====== TOAST GLOBAL ======
+    function showToast(msg){
+      const t = document.createElement("div");
+      t.className = "toast";
+      t.textContent = msg;
+      document.body.appendChild(t);
+      setTimeout(()=>t.remove(), 3000);
+    }
+
+  const carousel = document.getElementById('productCarousel');
+  const carouselArea = document.getElementById('carouselArea');
+  let autoScroll;
+
+  function scrollCarousel(direction) {
+    carousel.scrollBy({
+      left: direction * 240,
+      behavior: 'smooth'
+    });
+  }
+  </script>
+
+  <!-- AOS JS (animaciones) -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 700, // duración de la animación (ms)
+      once: true     // si quieres que la animación se ejecute solo una vez
+    });
+  </script>
+
+<script>
+  
+const buscador = document.getElementById('buscador');
+const sugerencias = document.getElementById('sugerencias');
+let seleccionado = -1;
+
+const productos = [
+  {
+    nombre: 'Ahoyador Beaver AG52',
+    url: 'campo y jardin.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/11892/image?unique=a5fc78f',
+    categoria: 'Campo y Jardín'
+  },
+  {
+    nombre: 'Motobomba autocebante aluminio',
+    url: 'producto2.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/12607/image?unique=d52dea1',
+    categoria: 'Manejo de Agua'
+  },
+  {
+    nombre: 'Fumigadora manual Royal Condor',
+    url: 'producto3.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/9256/image?unique=d97e32d',
+    categoria: 'Fumigación'
+  },
+  {
+    nombre: 'Generador Husqvarna G5500P',
+    url: 'producto4.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/13356/image?unique=aae89a2',
+    categoria: 'Manejo de Energía'
+  },
+  {
+    nombre: 'Electrobomba Barnes 2015HCE-5-3',
+    url: 'producto5.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/13970/image?unique=baf2d8c',
+    categoria: 'Manejo de Agua'
+  },
+  {
+    nombre: 'Cerca eléctrica El Cebú EC80Km',
+    url: 'producto6.html',
+    imagen: 'https://agro.unicorn.com.co/web/image/product.template/866/image?unique=ba6bffb',
+    categoria: 'Campo y Jardín'
+  }
+];
+
+buscador.addEventListener('input', () => {
+  const term = buscador.value.toLowerCase().trim();
+  sugerencias.innerHTML = '';
+  seleccionado = -1;
+
+  if (!term) { 
+    sugerencias.style.display = 'none'; 
+    return; 
+  }
+
+  const matches = productos.filter(p => p.nombre.toLowerCase().includes(term));
+  if (matches.length > 0) {
+    matches.forEach(p => {
+      const item = document.createElement('div');
+      item.classList.add('sugerencia-item');
+      item.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}">
+        <div class="info">
+          <strong>${p.nombre}</strong>
+          <span>${p.categoria}</span>
+        </div>
+      `;
+      item.onclick = () => window.location.href = p.url;
+      sugerencias.appendChild(item);
+    });
+  } else {
+    const li = document.createElement('li');
+    li.textContent = 'No se encontraron resultados';
+    li.style.color = '#999';
+    sugerencias.appendChild(li);
+  }
+
+  sugerencias.style.display = 'block';
+});
+
+buscador.addEventListener('keydown', (e) => {
+  const items = Array.from(sugerencias.querySelectorAll('.sugerencia-item'));
+  if (e.key === 'ArrowDown') {
+    seleccionado = Math.min(seleccionado + 1, items.length - 1);
+  } else if (e.key === 'ArrowUp') {
+    seleccionado = Math.max(seleccionado - 1, 0);
+  } else if (e.key === 'Enter') {
+    if (seleccionado >= 0 && seleccionado < items.length) {
+      items[seleccionado].click();
+    } else if (items.length > 0) {
+      window.location.href = productos[0].url;
+    }
+  }
+
+  items.forEach((item, i) => {
+    item.classList.toggle('active', i === seleccionado);
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const productos = document.querySelectorAll(".product-card");
+
+    productos.forEach(card => {
+      const original = parseFloat(card.dataset.precioOriginal);
+      const oferta = parseFloat(card.dataset.precioOferta);
+      const etiqueta = card.querySelector(".producto-oferta");
+
+      if (original && oferta && etiqueta) {
+        const descuento = Math.round(((original - oferta) / original) * 100);
+        etiqueta.textContent = `-${descuento}%`;
+      }
+    });
+  });
+
+/* ======= SISTEMA DE CARRITO CORREGIDO Y SIN ERRORES ======= */
+let productoSeleccionado = null;
+
+// ====== AGREGAR AL CARRITO ======
+function addToCart(producto) {
+  if (!producto || !producto.titulo) return;
+
+  let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const existente = carrito.find(p => p.titulo === producto.titulo);
+
+  if (existente) {
+    existente.cantidad++;
+  } else {
+    carrito.push({
+      titulo: producto.titulo,
+      imagen: producto.imagen || "",
+      precio: producto.precio || "$0",
+      cantidad: 1
+    });
+  }
+
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+  showToast("🛒 Producto agregado al carrito");
+  actualizarContador();
+
+  // Efecto de vibración en el icono del carrito
+  const icono = document.querySelector("#carritoLink .icono-carrito");
+  if (icono) {
+    icono.style.animation = "vibrarCarrito 0.4s ease";
+    icono.addEventListener("animationend", () => {
+      icono.style.animation = "";
+    }, { once: true });
+  }
+}
+
+function actualizarContador() {
+  const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+  const total = carrito.reduce((acc, p) => acc + (p.cantidad || 0), 0);
+  const badge = document.getElementById("contadorCarrito");
+  if (!badge) return;
+
+  if (total > 0) {
+    badge.textContent = total;
+    badge.classList.add("mostrar");
+    badge.style.animation = "burbujaPop 0.3s ease";
+  } else {
+    badge.classList.remove("mostrar");
+  }
+}
+
+// ====== MODAL ======
+function abrirModal(titulo, imagen, precio) {
+  productoSeleccionado = { titulo, imagen, precio };
+  document.getElementById("modalTitulo").textContent = titulo;
+  document.getElementById("modalImagen").src = imagen;
+  document.getElementById("modalDescripcion").textContent = precio;
+
+  const modalBtn = document.getElementById("modalAddBtn");
+  if (modalBtn) {
+    modalBtn.dataset.titulo = titulo;
+    modalBtn.dataset.imagen = imagen;
+    modalBtn.dataset.precio = precio;
+  }
+
+  document.getElementById("modalProducto").style.display = "flex";
+}
+
+function cerrarModal() {
+  document.getElementById("modalProducto").style.display = "none";
+}
+
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("modalProducto");
+  if (e.target === modal) cerrarModal();
+});
+
+// ====== EVENTO DE AGREGAR AL CARRITO (botones con clase .add-to-cart) ======
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".add-to-cart");
+  if (!btn) return;
+
+  const titulo = btn.dataset.titulo || (productoSeleccionado && productoSeleccionado.titulo);
+  const imagen = btn.dataset.imagen || (productoSeleccionado && productoSeleccionado.imagen) || "";
+  const precio = btn.dataset.precio || (productoSeleccionado && productoSeleccionado.precio) || "$0";
+
+  addToCart({ titulo, imagen, precio });
+
+  if (btn.id === "modalAddBtn") cerrarModal();
+});
+
+// ====== INICIALIZACIÓN ======
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarContador();
+
+  // Cálculo de etiquetas de descuento automático
+  document.querySelectorAll(".product-card").forEach(card => {
+    const original = parseFloat(card.dataset.precioOriginal);
+    const oferta = parseFloat(card.dataset.precioOferta);
+    const etiqueta = card.querySelector(".producto-oferta");
+    if (original && oferta && etiqueta) {
+      const descuento = Math.round(((original - oferta) / original) * 100);
+      etiqueta.textContent = `-${descuento}%`;
+    }
+  });
+});
+
+const toggle = document.getElementById("chat-toggle");
+const chat = document.getElementById("chat-container");
+const closeBtn = document.getElementById("chat-close");
+const input = document.getElementById("chat-input");
+const messages = document.getElementById("chat-messages");
+
+toggle.onclick = () => chat.style.display = "flex";
+closeBtn.onclick = () => chat.style.display = "none";
+
+// ENTER para enviar
+input.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") sendMessage();
+});
+
+async function sendMessage() {
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, "user");
+  input.value = "";
+
+  const response = await botResponse(text);
+  setTimeout(() => {
+    addMessage(response, "bot");
+  }, 500);
+}
+
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.classList.add("msg", type);
+  div.innerHTML = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
+
+// BOT INTELIGENTE PRO
+function buscarProducto(text) {
+  text = text.toLowerCase();
+
+  let resultados = productos.filter(p =>
+    p.nombre.toLowerCase().includes(text) || (p.categoria && p.categoria.toLowerCase().includes(text))
+  );
+
+  if (resultados.length > 0) {
+    let p = resultados[0];
+
+    return `
+    🛒 Te recomiendo este producto:<br><br>
+    <b>${p.nombre}</b><br>
+    💰 Ver más detalles en el sitio.<br><br>
+    <a href="${p.url}">
+      <button style="background:#ff6600;color:white;border:none;padding:8px;border-radius:6px;">
+        Ver producto
+      </button>
+    </a>
+    `;
+  }
+
+  return null;
+}
+
+async function botResponse(text) {
+  let recomendacion = buscarProducto(text);
+  if (recomendacion) return recomendacion;
+
+  text = text.toLowerCase();
+  if (text.includes("hola")) {
+    return "👋 Hola, soy tu asesor UNICORN. ¿Qué necesitas?";
+  }
+
+  if (text.includes("envio")) {
+    return "🚚 Enviamos a toda Colombia.";
+  }
+
+  try {
+   async function botResponse(text) {
+  const res = await fetch("http://localhost:3000/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ message: text })
+  });
+
+  const data = await res.json();
+  return data.reply;
+}
+  } catch (err) {
+    console.error("Error en botResponse API:", err);
+  }
+
+  return "🤖 ¿Buscas motobombas, guadañas o fumigadoras?";
+}
+window.onload = function() {
+  const hash = window.location.hash;
+
+  if (hash) {
+    const el = document.querySelector(hash);
+
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // efecto highlight
+      el.style.transition = "0.5s";
+      el.style.boxShadow = "0 0 20px orange";
+
+      setTimeout(() => {
+        el.style.boxShadow = "none";
+      }, 2000);
+    }
+  }
+};
+
+// Obtener búsqueda de la URL
+const params = new URLSearchParams(window.location.search);
+const search = params.get("search");
+
+if (search) {
+  const products = document.querySelectorAll(".producto"); // clase de tus productos
+
+  products.forEach(p => {
+    const text = p.innerText.toLowerCase();
+
+    if (text.includes(search.toLowerCase())) {
+      // Resaltar
+      p.style.border = "3px solid #ff6600";
+      p.style.background = "#fff3e0";
+
+      // Hacer scroll hacia el producto
+      p.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
+}
+
+</script>
+</body>
+</html>

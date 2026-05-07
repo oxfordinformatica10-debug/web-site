@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Categorías de Productos | Agro UNICORN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <!-- Fuentes y AOS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg: #f6f7f8;
+      --white: #ffffff;
+      --muted: #6b6b6b;
+      --accent: #2e7d32;      /* verde agrícola */
+      --accent-2: #f57c00;    /* naranja */
+      --card-shadow: 0 8px 24px rgba(17,17,17,0.06);
+      --radius: 14px;
+      --max-width: 1200px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--bg);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    } 
+
+   header{
+      background: #fff;
+      padding: 18px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      position: sticky;
+      top:0;
+      z-index:1500;
+    }
+    .logo{display:flex;align-items:center;cursor:pointer}
+    .logo img{width:44px;height:44px;border-radius:50%;margin-right:12px}
+    .logo span{font-weight:700;color:#0e008b;letter-spacing:0.2px}
+
+    nav a {
+      margin-left: 18px;
+      color: #111;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {color: var(--naranja);}
+    
+
+/* ====== BOTÓN DARK MODE ====== */
+    .dark-toggle {
+      background: none;
+      border: 2px solid var(--text);
+      border-radius: 50%;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 15px;
+    }
+
+/* ====== TOAST GLOBAL ====== */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--accent);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      animation: fadeInOut 3s ease forwards;
+      z-index: 3000;
+    }    
+
+/* ====== Estilo mejorado para el contador del carrito ====== */
+#carritoLink {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+#carritoLink:hover {
+  transform: scale(1.04);
+}
+
+/* Icono del carrito */
+#carritoLink .icono-carrito {
+  font-size: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+/* Contador (burbuja) */
+#contadorCarrito {
+  position: absolute;
+  top: -6px;
+  right: -16px;
+  background: linear-gradient(145deg, #ff9800, #f57c00);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 999px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  transform-origin: center;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+}
+
+/* Cuando aparece */
+#contadorCarrito.mostrar {
+  display: flex;
+  opacity: 1;
+}
+
+/* Animación de "pop" */
+@keyframes burbujaPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* Animación de vibración del ícono */
+@keyframes vibrarCarrito {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  75% { transform: rotate(-6deg); }
+  100% { transform: rotate(0deg); }
+}
+
+    /* ===== HERO ===== */
+    .hero {
+      background: url("https://agro.unicorn.com.co/web/image/23205/motobomba.jpg") center/cover no-repeat;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* ===== GRID DE CATEGORÍAS ===== */
+    main {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--azul);
+      margin-bottom: 40px;
+      font-size: 1.8rem;
+    }
+
+    .categorias-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .categoria-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius);
+      height: 260px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .categoria-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .categoria-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 25px;
+      color: #fff;
+      background: linear-gradient(to top, rgba(0,0,0,0.65), rgba(0,0,0,0.15));
+      transition: all 0.5s ease;
+    }
+
+    .categoria-overlay h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0;
+      transition: transform 0.4s ease, text-shadow 0.3s ease;
+    }
+
+    .categoria-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .categoria-card:hover img {
+      transform: scale(1.12);
+      filter: brightness(1.05);
+    }
+
+    .categoria-card:hover .categoria-overlay {
+      background: linear-gradient(135deg, rgba(245,124,0,0.75), rgba(14,0,139,0.75));
+    }
+
+    .categoria-card:hover .categoria-overlay h3 {
+      transform: translateY(-6px);
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* ====== Sección de Marcas Aliadas (Carrusel Automático) ====== */
+.marcas {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f5f5f5;
+  overflow: hidden;
+}
+
+.marcas-titulo {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #1a1a1a;
+}
+
+.marcas-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.marcas-track {
+  display: flex;
+  gap: 60px;
+  width: calc(200%); /* ancho doble para duplicados */
+  animation: scrollMarcas 20s linear infinite;
+}
+
+.marca-card {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.marca-card img {
+  max-width: 120px;
+  height: auto;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+.marca-card img:hover {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Animación automática */
+@keyframes scrollMarcas {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+    /* ===== FOOTER ===== */
+    footer {
+      background-color: #000;
+      color: #aaa;
+      padding: 40px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo" onclick="location.href='UNICORN.html'">
+      <img src="https://agro.unicorn.com.co/web/image/16724/20200424%20auls_planobordeazul_v1.png" alt="Logo UNICORN" />
+      <span>AGRO UNICORN</span>
+    </div>
+    <nav aria-label="Navegación principal">
+      <a href="productos.html">Productos</a>
+      <a href="piezas-accesorios.html">Piezas y Accesorios</a>
+      <a href="carrito.html" id="carritoLink" aria-label="Ver carrito">
+  <span class="icono-carrito">🛒</span>
+  <span style="font-weight:700;">Carrito</span>
+  <span id="contadorCarrito" aria-live="polite">0</span>
+</a>
+      <button class="dark-toggle" onclick="toggleDark()">🌙</button>
+    </nav>
+  </header>
+
+  <section class="hero" data-aos="fade-in">
+    <div class="hero-content">
+      <h1>Nuestras Categorías de Maquinaria</h1>
+      <p>Encuentra la mejor tecnología y durabilidad para cada tipo de trabajo agrícola.</p>
+    </div>
+  </section>
+
+  <main>
+    <h2 data-aos="fade-up">Explora por Categoría</h2>
+    <div class="categorias-grid">
+      <div class="categoria-card" data-aos="zoom-in" onclick="location.href='campo-jardin.html'">
+        <img src="https://agro.unicorn.com.co/web/image/23203/1391921_610433935680148_1338398718_n.jpg" alt="Campo y Jardín">
+        <div class="categoria-overlay"><h3>Campo y Jardín</h3></div>
+      </div>
+
+      <div class="categoria-card" data-aos="zoom-in" onclick="location.href='manejo-agua.html'">
+        <img src="https://agro.unicorn.com.co/web/image/23205/motobomba.jpg" alt="Manejo de Agua">
+        <div class="categoria-overlay"><h3>Manejo de Agua</h3></div>
+      </div>
+
+      <div class="categoria-card" data-aos="zoom-in" onclick="location.href='fumigacion.html'">
+        <img src="https://agro.unicorn.com.co/web/image/23207/Fumigadora%20Mitsubishi%20TU26.jpg" alt="Fumigación">
+        <div class="categoria-overlay"><h3>Fumigación</h3></div>
+      </div>
+
+      <div class="categoria-card" data-aos="zoom-in" onclick="location.href='manejo-energia.html'">
+        <img src="https://agro.unicorn.com.co/web/image/23209/Generador%20Powermaster%204500.jpg" alt="Manejo de Energía">
+        <div class="categoria-overlay"><h3>Manejo de Energía</h3></div>
+      </div>
+
+      <div class="categoria-card" data-aos="zoom-in" onclick="location.href='construccion.html'">
+        <img src="https://agro.unicorn.com.co/web/image/23211/Apisonador%20Forte%20Varios.jpg" alt="Construcción">
+        <div class="categoria-overlay"><h3>Construcción</h3></div>
+      </div>
+
+      <div class="categoria-card" data-aos="zoom-in" onclick="location.href='ferreteria.html'">
+        <img src="https://agro.unicorn.com.co/web/image/23213/Herramienta%20Bellota.jpg" alt="Ferretería">
+        <div class="categoria-overlay"><h3>Ferretería</h3></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ===================== INICIO MARCAS ALIADAS ===================== -->
+<section class="marcas" data-aos="fade-up">
+  <h2 class="marcas-titulo">Nuestras Marcas Aliadas</h2>
+  <div class="marcas-slider">
+    <div class="marcas-track">
+      <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/22/2/husqvarna-logo-png_seeklogo-227182.png" alt="Husqvarna"></div>
+    <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Stihl_Logo.svg/2560px-Stihl_Logo.svg.png" alt="Stihl"></div>
+    <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/03/Shindaiwa-Logo.png" alt="Shindaiwa"></div>
+    <div class="marca-card"><img src="https://bombasbeyond.com/wp-content/uploads/2023/06/logo-barnes.webp" alt="Barnes"></div>
+    <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/30/2/honda-power-equipment-logo-png_seeklogo-303966.png" alt="Honda"></div>
+    <div class="marca-card"><img src="https://seacoastpower.com/wp-content/uploads/2024/03/Echo.png" alt="Echo"></div>
+    <div class="marca-card"><img src="https://cdn241.s3.eu-west-2.amazonaws.com/PedrolloDistribution/Images/Why/Our-Partners/Main-Page/Pedrollo-Logo-Page.webp" alt="Pedrollo"></div>
+    <div class="marca-card"><img src="https://igihm.com/imagenes/logo.png" alt="Ignacio Gómez IHM"></div>
+    <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Subaru_logo_%28transparent%29.svg/1200px-Subaru_logo_%28transparent%29.svg.png" alt="Subaru"></div>
+    <div class="marca-card"><img src="https://purepng.com/public/uploads/large/purepng.com-mitsubishi-logomitsubishimitsubishi-groupmitsubishi-automobilesmitsubishi-logo-1701527515646xfkuq.png" alt="Mitsubishi"></div>
+    <div class="marca-card"><img src="https://www.cdcsoftware.com/wp-content/uploads/2019/02/Siemens-Logo.png" alt="Siemens"></div>
+    <div class="marca-card"><img src="https://download.logo.wine/logo/WEG_Industries/WEG_Industries-Logo.wine.png" alt="WEG"></div>
+    <div class="marca-card"><img src="https://cdn.freebiesupply.com/logos/thumbs/2x/yamaha-12-logo.png" alt="Yamaha"></div>
+    <div class="marca-card"><img src="https://logodownload.org/wp-content/uploads/2022/09/kaercher-logo-0.png" alt="Kärcher"></div>
+    <div class="marca-card"><img src="https://www.varriale.com/en/wp-content/uploads/2021/02/lombardini-01.png" alt="Kohler Lombardin"></div>
+    <div class="marca-card"><img src="https://www.coacosta.com/wp-content/uploads/2017/07/Royal-condor.png" alt="Royal Condor"></div>
+    <div class="marca-card"><img src="https://d7rh5s3nxmpy4.cloudfront.net/CMP4506/files/LOGO_BELLOTA_NEGRO.png" alt="Bellota"></div>
+    <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/01/Tramontina-Logo.png" alt="Tramontina"></div>
+    <div class="marca-card"><img src="https://www.cercaselcebu.com.co/wp-content/uploads/2025/08/logocercas.png" alt="El Cebu"></div>
+    <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/DeWalt_Logo.svg/1024px-DeWalt_Logo.svg.png"     alt="DeWalt"></div>
+
+      <!-- duplicados para efecto loop infinito -->
+      <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/22/2/husqvarna-logo-png_seeklogo-227182.png" alt="Husqvarna"></div>
+      <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Stihl_Logo.svg/2560px-Stihl_Logo.svg.png" alt="Stihl"></div>
+      <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/03/Shindaiwa-Logo.png" alt="Shindaiwa"></div>
+      <div class="marca-card"><img src="https://bombasbeyond.com/wp-content/uploads/2023/06/logo-barnes.webp" alt="Barnes"></div>
+      <div class="marca-card"><img src="https://images.seeklogo.com/logo-png/30/2/honda-power-equipment-logo-png_seeklogo-303966.png" alt="Honda"></div>
+      <div class="marca-card"><img src="https://seacoastpower.com/wp-content/uploads/2024/03/Echo.png" alt="Echo"></div>
+      <div class="marca-card"><img src="https://cdn241.s3.eu-west-2.amazonaws.com/PedrolloDistribution/Images/Why/Our-Partners/Main-Page/Pedrollo-Logo-Page.webp" alt="Pedrollo"></div>
+      <div class="marca-card"><img src="https://igihm.com/imagenes/logo.png" alt="Ignacio Gómez IHM"></div>
+      <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Subaru_logo_%28transparent%29.svg/1200px-Subaru_logo_%28transparent%29.svg.png" alt="Subaru"></div>
+      <div class="marca-card"><img src="https://purepng.com/public/uploads/large/purepng.com-mitsubishi-logomitsubishimitsubishi-groupmitsubishi-automobilesmitsubishi-logo-1701527515646xfkuq.png" alt="Mitsubishi"></div>
+      <div class="marca-card"><img src="https://www.cdcsoftware.com/wp-content/uploads/2019/02/Siemens-Logo.png" alt="Siemens"></div>
+      <div class="marca-card"><img src="https://download.logo.wine/logo/WEG_Industries/WEG_Industries-Logo.wine.png" alt="WEG"></div>
+      <div class="marca-card"><img src="https://cdn.freebiesupply.com/logos/thumbs/2x/yamaha-12-logo.png" alt="Yamaha"></div>
+      <div class="marca-card"><img src="https://logodownload.org/wp-content/uploads/2022/09/kaercher-logo-0.png" alt="Kärcher"></div>
+      <div class="marca-card"><img src="https://www.varriale.com/en/wp-content/uploads/2021/02/lombardini-01.png" alt="Kohler Lombardin"></div>
+      <div class="marca-card"><img src="https://www.coacosta.com/wp-content/uploads/2017/07/Royal-condor.png" alt="Royal Condor"></div>
+      <div class="marca-card"><img src="https://d7rh5s3nxmpy4.cloudfront.net/CMP4506/files/LOGO_BELLOTA_NEGRO.png" alt="Bellota"></div>
+      <div class="marca-card"><img src="https://logos-world.net/wp-content/uploads/2023/01/Tramontina-Logo.png" alt="Tramontina"></div>
+      <div class="marca-card"><img src="https://www.cercaselcebu.com.co/wp-content/uploads/2025/08/logocercas.png" alt="El Cebu"></div>
+      <div class="marca-card"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/DeWalt_Logo.svg/1024px-DeWalt_Logo.svg.png" alt="DeWalt"></div>
+    </div>
+  </div>
+</section>
+<!-- ===================== FIN MARCAS ALIADAS ===================== -->
+
+  <!-- Footer accesible -->
+  <footer style="background-color: #111; color: #fff; padding: 40px 20px; font-size: 0.9rem;">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between; max-width: 1200px; margin: auto;">
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px; color: #fff;">UNICORN</h4>
+      <p>Maquinaria de calidad para el campo colombiano desde 1995.</p>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Productos</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="campo-jardin.html" style="color: #ccc; text-decoration: none;">Campo y Jardín</a></li>
+        <li><a href="manejo-agua.html" style="color: #ccc; text-decoration: none;">Manejo de Agua</a></li>
+        <li><a href="fumigacion.html" style="color: #ccc; text-decoration: none;">Fumigación</a></li>
+        <li><a href="manejo-energia.html" style="color: #ccc; text-decoration: none;">Manejo de Energía</a></li>
+        <li><a href="construccion.html" style="color: #ccc; text-decoration: none;">Construcción</a></li>
+        <li><a href="ferreteria.html" style="color: #ccc; text-decoration: none;">Ferretería</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Empresa</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sobre nosotros</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Sucursales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Blog</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Trabaja con nosotros</a></li>
+      </ul>
+    </div>
+
+    <div style="flex: 1 1 150px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Soporte</h4>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Contacto</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Garantía</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Manuales</a></li>
+        <li><a href="#" style="color: #ccc; text-decoration: none;">Centro técnico</a></li>
+      </ul>
+    </div>
+
+    <!-- (enlaces de productos, empresa, soporte se mantienen igual) -->
+    
+    <div style="flex: 1 1 200px; margin: 20px;">
+      <h4 style="margin-bottom: 15px;">Síguenos</h4>
+      <div style="margin: 10px; display: 20px flex; gap: 40px;">
+        <a href="https://www.facebook.com/agrounicorn.bogota" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" style="width: 24px;"></a>
+        <a href="https://www.instagram.com/agro_unicorn" target="_blank"><img src="https://encrypted-tbn3.gstatic.com/favicon-tbn?q=tbn:ANd9GcTI-5PGHmIaNROji4Au1BCHWlIYYuBV-S5o10vNQOpO8bKYe_6qoBk4-ZuXaoJFuMvh4TIqxnwOPvBj23km7XY2pAb98oE7qC3Akz3TL6SOymq5kX9Qzg" style="width: 24px;"></a>
+        <a href="https://www.tiktok.com/@agro_unicorn" target="_blank"><img src="https://encrypted-tbn3.gstatic.com/favicon-tbn?q=tbn:ANd9GcSEII2IIRImodcWZgz02fSWMJAoch4dG8QOVwhrtt_QvRi6NJLy8IjW1yAqU5ugCsqWjUeYJzz8ETnsSGPCArXzGmknKGS3PlAQHOi_1GEZqoL3vw" style="width: 24px;"></a>
+        <a href="https://www.youtube.com/@agro-unicorn" target="_blank"><img src="https://static.vecteezy.com/system/resources/previews/023/986/704/non_2x/youtube-logo-youtube-logo-transparent-youtube-icon-transparent-free-free-png.png" style="width: 24px;"></a>
+      </div>
+    </div>
+  </div>
+
+  <div style="border-top: 1px solid #333; margin-top: 30px; padding-top: 20px; text-align: center; color: #aaa;">
+    © 2025 UNICORN. Todos los derechos reservados. | <a href="#" style="color: #aaa;">Política de privacidad</a>
+  </div>
+</footer>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init({ duration: 800, once: true });</script>
+
+  <script>
+    // Carrito sincronizado
+    function actualizarContador() {
+      const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+      const total = carrito.reduce((acc, p) => acc + (p.cantidad || 0), 0);
+      const badge = document.getElementById("contadorCarrito");
+      if (!badge) return;
+      if (total > 0) {
+        badge.textContent = total;
+        badge.classList.add("mostrar");
+      } else {
+        badge.classList.remove("mostrar");
+      }
+    }
+    document.addEventListener("DOMContentLoaded", actualizarContador);
+  </script>
+</body>
+</html>
